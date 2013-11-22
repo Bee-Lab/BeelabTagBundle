@@ -1,0 +1,23 @@
+{
+    "name": "beelab/tag-bundle",
+    "type": "symfony-bundle",
+    "description": "Provide tags for Doctrine entities",
+    "keywords": ["Tag"],
+    "homepage": "http://bee-lab.it",
+    "license": "LGPL-3.0",
+    "authors": [
+        {
+            "name": "Massimiliano Arione ",
+            "email": "massimiliano.arione@bee-lab.it"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.8",
+        "symfony/symfony": "~2.3",
+        "doctrine/orm": ">=2.2.3,<2.4-dev"
+    },
+    "autoload": {
+        "psr-0": { "Beelab\\TagBundle": "" }
+    },
+    "target-dir": "Beelab/TagBundle"
+}

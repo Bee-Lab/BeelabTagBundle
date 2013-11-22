@@ -72,7 +72,13 @@ Insert in main configuration:
 # BeelabTag Configuration
 beelab_tag:
     tag_class: Acme\DemoBundle\Entity\Tag
+    purge: true
 ```
+
+**Warning**: the ``purge`` option is not mandatory and defaults to ``false``. You should use this
+option (with ``true`` value) only if you want to delete a tag when a taggable entity
+is deleted. You should avoid purging tags if you configured more than a taggable entity,
+since this could lead to constraint violations.
 
 Then you can create some entities that implement ``TaggableInteface``.
 

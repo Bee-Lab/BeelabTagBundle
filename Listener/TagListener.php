@@ -12,14 +12,15 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
  */
 class TagListener
 {
-    protected $em, $uow, $tag;
+    protected $em, $uow, $tag, $purge;
 
     /**
      * Constructor
      *
-     * @param string $tagClassName
+     * @param string  $tagClassName
+     * @param boolean $purge        whether to delete tags when entity is deleted
      */
-    public function __construct($tagClassName)
+    public function __construct($tagClassName, $purge = false)
     {
         if (!class_exists($tagClassName)) {
             throw MappingException::nonExistingClass($tagClassName);
@@ -28,6 +29,7 @@ class TagListener
         if (!$this->tag instanceof TagInterface) {
             throw new \RuntimeException(sprintf('Class "%s" must implment TagInterface.', $tagClassName));
         }
+        $this->purge = $purge;
     }
 
     /**
@@ -49,8 +51,12 @@ class TagListener
                 $this->setTags($entity, true);
             }
         }
-        foreach ($this->uow->getScheduledEntityDeletions() as $entity) {
-            // TODO remove possible tags that are unassociated?
+        if ($this->purge) {
+            foreach ($this->uow->getScheduledEntityDeletions() as $entity) {
+                if ($entity instanceof TaggableInterface) {
+                    $this->purgeTags($entity);
+                }
+            }
         }
     }
 
@@ -94,5 +100,19 @@ class TagListener
         // see http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#onflush
         $entityClassMetadata = $this->em->getClassMetadata(get_class($entity));
         $this->uow->computeChangeSets($entityClassMetadata, $entity);
+    }
+
+    /**
+     * Purge oprhan tags
+     * Warning: DO NOT purge tags if you have more than one entity
+     * with tags, since this could lead to costraint violations
+     *
+     * @param TaggableInterface $entity
+     */
+    protected function purgeTags(TaggableInterface $entity)
+    {
+        foreach ($entity->getTags() as $oldTag) {
+            $this->em->remove($oldTag);
+        }
     }
 }

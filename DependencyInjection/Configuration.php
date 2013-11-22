@@ -25,6 +25,11 @@ class Configuration implements ConfigurationInterface
                     ->isRequired()
                 ->end()
             ->end()
+            ->children()
+                ->booleanNode('purge')
+                    ->defaultFalse()
+                ->end()
+            ->end()
         ;
 
         return $treeBuilder;

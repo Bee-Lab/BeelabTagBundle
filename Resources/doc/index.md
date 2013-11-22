@@ -150,5 +150,59 @@ class ArticleType extends AbstractType
 }
 ```
 
-You'll not need anything else (e.g. modifying your controllers), since BeelabTagBundle
-will take care of saving each Tag and adding them to your ``Article`` entity.
+Then, add a ``$tagsText`` property to your entity:
+
+```php
+<?php
+// src/Acme/DemoBundle/Entity
+
+class Article implements TaggableInterface
+{
+    // ...
+
+    protected $tagsText;
+
+    // ...
+
+    /**
+     * Set tags text
+     *
+     * @param  string
+     * @return Article
+     */
+    public function setTagsText($tagsText)
+    {
+        $this->tagsText = $tagsText;
+        // this is a possible use with Gedmo Timestampable
+        $this->setUpdated(new \DateTime());
+
+        return $this;
+    }
+
+    /**
+     * Get tags text
+     *
+     * @return string
+     */
+    public function getTagsText()
+    {
+        $this->tagsText = implode(', ', $this->tags->toArray());
+
+        return $this->tagsText;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTagNames()
+    {
+        return empty($this->tagsText) ? array() : array_map('trim', explode(',', $this->tagsText));
+    }
+
+    // ...
+}
+```
+
+Note that you need to change something in your Entity when ``$tagsText`` is updated,
+otherwise flush is not triggered and tags won't work. In example above, we're using
+[Gedmo Timestampable extension](https://github.com/stof/StofDoctrineExtensionsBundle).

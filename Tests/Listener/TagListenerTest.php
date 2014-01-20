@@ -61,6 +61,21 @@ class LastLoginListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testSetTags()
     {
+        $tag = $this->getMock('Beelab\TagBundle\Tag\TagInterface');
+        $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
+        $em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
+        $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
+
+        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($em));
+        $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
+        // TODO create some stubs of taggable entities and non-taggable entities...
+        $uow->expects($this->once())->method('getScheduledEntityInsertions')->will($this->returnValue(array($tag)));
+        $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue(array()));
+        $uow->expects($this->once())->method('getScheduledEntityDeletions')->will($this->returnValue(array()));
+
+        $listener = new TagListener(get_class($tag), true);
+        $listener->onFlush($args);
+
         $this->markTestIncomplete('TODO');
     }
 

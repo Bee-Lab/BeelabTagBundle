@@ -90,6 +90,7 @@ Suppose you want to use tags on an ``Article`` entity:
 
 namespace Acme\DemoBundle\Entity;
 
+use Beelab\TagBundle\Tag\TagInterface
 use Beelab\TagBundle\Tag\TaggableInterface
 use Doctrine\ORM\Mapping as ORM;
 
@@ -116,7 +117,7 @@ class Article implements TaggableInterface
     /**
      * Add tag
      *
-     * @param  Tag     $tag
+     * @param  TagInterface $tag
      * @return Article
      */
     public function addTag(TagInterface $tag)

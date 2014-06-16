@@ -1,5 +1,5 @@
 BeelabTagBundle
-================
+===============
 
 [![Total Downloads](https://poser.pugx.org/beelab/tag-bundle/downloads.png)](https://packagist.org/packages/beelab/tag-bundle)
 

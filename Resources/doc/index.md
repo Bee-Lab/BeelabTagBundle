@@ -12,7 +12,7 @@ BeelabTagBundle Documentation
 Run from terminal:
 
 ```bash
-$ php composer.phar require beelab/tag-bundle:1.*
+$ php composer.phar require beelab/tag-bundle:1.0.*
 ```
 
 Enable bundle in the kernel:
@@ -41,7 +41,7 @@ Example:
 
 namespace Acme\DemoBundle\Entity;
 
-use Beelab\TagBundle\Tag\TagInterface 
+use Beelab\TagBundle\Tag\TagInterface
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -59,7 +59,7 @@ class Tag implements TagInterface
     {
         $this->name = $name;
     }
-    
+
     // ... implement all methods required by interface
 }
 ```
@@ -75,10 +75,10 @@ beelab_tag:
     purge: true
 ```
 
-**Warning**: the ``purge`` option is not mandatory and defaults to ``false``. You should use this
-option (with ``true`` value) only if you want to delete a tag when a taggable entity
-is deleted. You should avoid purging tags if you configured more than a taggable entity,
-since this could lead to constraint violations.
+> **Warning**: the ``purge`` option is not mandatory and defaults to ``false``. You should use this
+> option (with ``true`` value) only if you want to delete a tag when a taggable entity
+> is deleted. You should avoid purging tags if you configured more than a taggable entity,
+> since this could lead to constraint violations.
 
 Then you can create some entities that implement ``TaggableInteface``.
 
@@ -104,10 +104,7 @@ class Article implements TaggableInterface
 {
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="articles")
-     * @ORM\JoinTable(name="article_tag",
-     *     joinColumns={@ORM\JoinColumn(name="article_id", referencedColumnName="id", onDelete="cascade")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id", onDelete="cascade")}
-     * )
+     * @ORM\JoinTable()
      */
     protected $tags;
 
@@ -145,7 +142,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 // ...
 
-class ArticleType extends AbstractType
+class ArticleFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

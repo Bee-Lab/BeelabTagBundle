@@ -12,7 +12,25 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
  */
 class TagListener
 {
-    protected $em, $uow, $tag, $purge;
+    /**
+     * @var \Doctrine\ORM\EntityManager
+     */
+    protected $em;
+
+    /**
+     * @var \Doctrine\ORM\UnitOfWork
+     */
+    protected $uow;
+
+    /**
+     * @var TagInterface
+     */
+    protected $tag;
+
+    /**
+     * @var bool
+     */
+    protected $purge;
 
     /**
      * Constructor
@@ -27,13 +45,14 @@ class TagListener
         }
         $this->tag = new $tagClassName();
         if (!$this->tag instanceof TagInterface) {
-            throw new \RuntimeException(sprintf('Class "%s" must implment TagInterface.', $tagClassName));
+            throw new \InvalidArgumentException(sprintf('Class "%s" must implement TagInterface.', $tagClassName));
         }
         $this->purge = $purge;
     }
 
     /**
-     * Main method
+     * Main method: get all entities scheduled to be inserted, updated or deleted,
+     * then remove duplicates and call setTags() method
      *
      * @param OnFlushEventArgs $args
      */
@@ -41,18 +60,19 @@ class TagListener
     {
         $this->em = $args->getEntityManager();
         $this->uow = $this->em->getUnitOfWork();
-        foreach ($this->uow->getScheduledEntityInsertions() as $entity) {
-            if ($entity instanceof TaggableInterface) {
-                $this->setTags($entity);
+        $entities = $this->uow->getScheduledEntityInsertions();
+        foreach ($this->uow->getScheduledEntityUpdates() as $key => $entity) {
+            if (!in_array($entity, $entities)) {
+                $entities[$key] = $entity;
             }
         }
-        foreach ($this->uow->getScheduledEntityUpdates() as $entity) {
+        foreach ($entities as $entity) {
             if ($entity instanceof TaggableInterface) {
                 $this->setTags($entity, true);
             }
         }
         if ($this->purge) {
-            foreach ($this->uow->getScheduledEntityDeletions() as $entity) {
+            foreach ($this->uow->getScheduledEntityDeletions() as $key => $entity) {
                 if ($entity instanceof TaggableInterface) {
                     $this->purgeTags($entity);
                 }

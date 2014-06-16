@@ -1,13 +1,17 @@
 <?php
 
-namespace Beelab\TagBundle\Tests\Listner;
+namespace Beelab\TagBundle\Tests\Listener;
 
 use Beelab\TagBundle\Listener\TagListener;
+use Beelab\TagBundle\Test\NonTaggableStub;
+use Beelab\TagBundle\Test\TagStub;
+use Beelab\TagBundle\Test\TaggableStub;
+use Beelab\TagBundle\Test\TaggableStub2;
 
 /**
  * @group unit
  */
-class LastLoginListenerTest extends \PHPUnit_Framework_TestCase
+class TagListenerTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException Doctrine\Common\Persistence\Mapping\MappingException
@@ -18,11 +22,11 @@ class LastLoginListenerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException InvalidArgumentException
      */
     public function testInvalidClass()
     {
-        $listener = new TagListener('Beelab\TagBundle\Tests\Listner\LastLoginListenerTest');
+        $listener = new TagListener('Beelab\TagBundle\Test\NonTaggableStub');
     }
 
     public function testOnFlush()
@@ -30,12 +34,24 @@ class LastLoginListenerTest extends \PHPUnit_Framework_TestCase
         $tag = $this->getMock('Beelab\TagBundle\Tag\TagInterface');
         $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
         $em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
+        $repo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
+        $metadata = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')->disableOriginalConstructor()->getMock();
 
         $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($em));
         $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
-        $uow->expects($this->once())->method('getScheduledEntityInsertions')->will($this->returnValue(array()));
-        $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue(array()));
+        $em->expects($this->once())->method('getRepository')->will($this->returnValue($repo));
+        $em->expects($this->any())->method('getClassMetadata')->will($this->returnValue($metadata));
+        $uow
+            ->expects($this->once())
+            ->method('getScheduledEntityInsertions')
+            ->will($this->returnValue(array(new TaggableStub(), new NonTaggableStub())))
+        ;
+        $uow
+            ->expects($this->once())
+            ->method('getScheduledEntityUpdates')
+            ->will($this->returnValue(array(new TaggableStub2())))
+        ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 
         $listener = new TagListener(get_class($tag));
@@ -44,7 +60,7 @@ class LastLoginListenerTest extends \PHPUnit_Framework_TestCase
 
     public function testOnFlushWithPurge()
     {
-        $tag = $this->getMock('Beelab\TagBundle\Tag\TagInterface');
+        $tag = new \Beelab\TagBundle\Test\TagStub;
         $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
         $em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
@@ -53,7 +69,11 @@ class LastLoginListenerTest extends \PHPUnit_Framework_TestCase
         $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
         $uow->expects($this->once())->method('getScheduledEntityInsertions')->will($this->returnValue(array()));
         $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue(array()));
-        $uow->expects($this->once())->method('getScheduledEntityDeletions')->will($this->returnValue(array()));
+        $uow
+            ->expects($this->once())
+            ->method('getScheduledEntityDeletions')
+            ->will($this->returnValue(array(new TaggableStub())))
+        ;
 
         $listener = new TagListener(get_class($tag), true);
         $listener->onFlush($args);
@@ -75,12 +95,5 @@ class LastLoginListenerTest extends \PHPUnit_Framework_TestCase
 
         $listener = new TagListener(get_class($tag), true);
         $listener->onFlush($args);
-
-        $this->markTestIncomplete('TODO');
-    }
-
-    public function testPurgeTags()
-    {
-        $this->markTestIncomplete('TODO');
     }
 }

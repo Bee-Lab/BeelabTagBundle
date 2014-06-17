@@ -13,7 +13,7 @@ class TaggableStub implements TaggableInterface
     /**
      * Add tag
      *
-     * @param Tag $tag
+     * @param TagInterface $tag
      */
     public function addTag(TagInterface $tag)
     {
@@ -42,7 +42,7 @@ class TaggableStub implements TaggableInterface
     /**
      * Has tag
      *
-     * @param  Tag     $tag
+     * @param  TagInterface $tag
      * @return boolean
      */
     public function hasTag(TagInterface $tag)
@@ -52,7 +52,7 @@ class TaggableStub implements TaggableInterface
     /**
      * Remove tag
      *
-     * @param Tag $tag
+     * @param TagInterface $tag
      */
     public function removeTag(TagInterface $tag)
     {

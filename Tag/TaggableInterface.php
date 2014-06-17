@@ -7,7 +7,7 @@ interface TaggableInterface
     /**
      * Add tag
      *
-     * @param Tag $tag
+     * @param TagInterface $tag
      */
     public function addTag(TagInterface $tag);
 
@@ -28,7 +28,7 @@ interface TaggableInterface
     /**
      * Has tag
      *
-     * @param  Tag     $tag
+     * @param  TagInterface $tag
      * @return boolean
      */
     public function hasTag(TagInterface $tag);
@@ -36,7 +36,7 @@ interface TaggableInterface
     /**
      * Remove tag
      *
-     * @param Tag $tag
+     * @param TagInterface $tag
      */
     public function removeTag(TagInterface $tag);
 }

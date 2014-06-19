@@ -41,7 +41,7 @@ Example:
 
 namespace Acme\DemoBundle\Entity;
 
-use Beelab\TagBundle\Tag\TagInterface
+use Beelab\TagBundle\Tag\TagInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**

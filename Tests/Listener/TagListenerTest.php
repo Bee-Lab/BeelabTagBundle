@@ -7,6 +7,7 @@ use Beelab\TagBundle\Test\NonTaggableStub;
 use Beelab\TagBundle\Test\TagStub;
 use Beelab\TagBundle\Test\TaggableStub;
 use Beelab\TagBundle\Test\TaggableStub2;
+use Beelab\TagBundle\Test\TaggableStub3;
 
 /**
  * @group unit
@@ -51,6 +52,34 @@ class TagListenerTest extends \PHPUnit_Framework_TestCase
             ->expects($this->once())
             ->method('getScheduledEntityUpdates')
             ->will($this->returnValue(array(new TaggableStub2())))
+        ;
+        $uow->expects($this->never())->method('getScheduledEntityDeletions');
+
+        $listener = new TagListener(get_class($tag));
+        $listener->onFlush($args);
+    }
+
+    public function testOnFlushEntityWithoutTags()
+    {
+        $tag = $this->getMock('Beelab\TagBundle\Tag\TagInterface');
+        $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
+        $em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
+        $repo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();
+        $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
+        $metadata = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')->disableOriginalConstructor()->getMock();
+
+        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($em));
+        $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
+        $em->expects($this->any())->method('getClassMetadata')->will($this->returnValue($metadata));
+        $uow
+            ->expects($this->once())
+            ->method('getScheduledEntityInsertions')
+            ->will($this->returnValue(array(new TaggableStub3())))
+        ;
+        $uow
+            ->expects($this->once())
+            ->method('getScheduledEntityUpdates')
+            ->will($this->returnValue(array()))
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 

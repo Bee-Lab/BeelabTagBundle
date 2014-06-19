@@ -52,15 +52,62 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Tag implements TagInterface
 {
-    // ...
+    /**
+     * @var integer
+     *
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column()
+     */
     protected $name;
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param  string $name
+     * @return Tag
+     */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
-    // ... implement all methods required by interface
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
 }
 ```
 
@@ -92,6 +139,7 @@ namespace Acme\DemoBundle\Entity;
 
 use Beelab\TagBundle\Tag\TagInterface;
 use Beelab\TagBundle\Tag\TaggableInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -103,7 +151,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Article implements TaggableInterface
 {
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="articles")
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Tag")
      * @ORM\JoinTable()
      */
     protected $tags;
@@ -112,9 +162,16 @@ class Article implements TaggableInterface
     // replacing "Tag" with "TagInterface" where appropriate
 
     /**
-     * Add tag
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
+
+    /**
+     * {@inheritDoc}
      *
-     * @param  TagInterface $tag
      * @return Article
      */
     public function addTag(TagInterface $tag)
@@ -124,7 +181,37 @@ class Article implements TaggableInterface
         return $this;
     }
 
-    // ... implement all methods required by interface
+    /**
+     * {@inheritDoc}
+     */
+    public function removeTag(TagInterface $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function hasTag(TagInterface $tag)
+    {
+        return $this->tags->contains($tag);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getTagNames()
+    {
+        return empty($this->tagsText) ? array() : array_map('trim', explode(',', $this->tagsText));
+    }
 }
 ```
 
@@ -160,11 +247,15 @@ Then, add a ``$tagsText`` property to your entity:
 <?php
 // src/Acme/DemoBundle/Entity
 
+// use...
+
 class Article implements TaggableInterface
 {
     // ...
 
     protected $tagsText;
+
+    protected $updated;
 
     // ...
 
@@ -177,8 +268,7 @@ class Article implements TaggableInterface
     public function setTagsText($tagsText)
     {
         $this->tagsText = $tagsText;
-        // this is a possible use with Gedmo Timestampable
-        $this->setUpdated(new \DateTime());
+        $this->updated = new \DateTime();
 
         return $this;
     }
@@ -195,18 +285,10 @@ class Article implements TaggableInterface
         return $this->tagsText;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function getTagNames()
-    {
-        return empty($this->tagsText) ? array() : array_map('trim', explode(',', $this->tagsText));
-    }
-
     // ...
 }
 ```
 
 Note that you need to change something in your Entity when ``$tagsText`` is updated,
 otherwise flush is not triggered and tags won't work. In example above, we're using
-[Gedmo Timestampable extension](https://github.com/stof/StofDoctrineExtensionsBundle).
+an ``$updated`` DateTime property.

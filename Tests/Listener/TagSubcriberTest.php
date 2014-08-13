@@ -12,7 +12,7 @@ use Beelab\TagBundle\Test\TaggableStub3;
 /**
  * @group unit
  */
-class TagSubscriberTest extends \PHPUnit_Framework_TestCase
+class TagSubcriberTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException Doctrine\Common\Persistence\Mapping\MappingException

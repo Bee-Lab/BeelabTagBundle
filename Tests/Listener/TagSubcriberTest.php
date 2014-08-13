@@ -2,7 +2,7 @@
 
 namespace Beelab\TagBundle\Tests\Listener;
 
-use Beelab\TagBundle\Listener\TagListener;
+use Beelab\TagBundle\Listener\TagSubscriber;
 use Beelab\TagBundle\Test\NonTaggableStub;
 use Beelab\TagBundle\Test\TagStub;
 use Beelab\TagBundle\Test\TaggableStub;
@@ -12,14 +12,14 @@ use Beelab\TagBundle\Test\TaggableStub3;
 /**
  * @group unit
  */
-class TagListenerTest extends \PHPUnit_Framework_TestCase
+class TagSubscriberTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException Doctrine\Common\Persistence\Mapping\MappingException
      */
     public function testNonexistentClass()
     {
-        $listener = new TagListener('ClassDoesNotExist');
+        $subscriber = new TagSubscriber('ClassDoesNotExist');
     }
 
     /**
@@ -27,7 +27,15 @@ class TagListenerTest extends \PHPUnit_Framework_TestCase
      */
     public function testInvalidClass()
     {
-        $listener = new TagListener('Beelab\TagBundle\Test\NonTaggableStub');
+        $subscriber = new TagSubscriber('Beelab\TagBundle\Test\NonTaggableStub');
+    }
+
+    public function testGetSubscribedEvents()
+    {
+        $tag = $this->getMock('Beelab\TagBundle\Tag\TagInterface');
+        $subscriber = new TagSubscriber(get_class($tag));
+
+        $this->assertContains('onFlush', $subscriber->getSubscribedEvents());
     }
 
     public function testOnFlush()
@@ -55,8 +63,8 @@ class TagListenerTest extends \PHPUnit_Framework_TestCase
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 
-        $listener = new TagListener(get_class($tag));
-        $listener->onFlush($args);
+        $subscriber = new TagSubscriber(get_class($tag));
+        $subscriber->onFlush($args);
     }
 
     public function testOnFlushEntityWithoutTags()
@@ -82,8 +90,8 @@ class TagListenerTest extends \PHPUnit_Framework_TestCase
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 
-        $listener = new TagListener(get_class($tag));
-        $listener->onFlush($args);
+        $subscriber = new TagSubscriber(get_class($tag));
+        $subscriber->onFlush($args);
     }
 
     public function testOnFlushWithPurge()
@@ -103,8 +111,8 @@ class TagListenerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array(new TaggableStub())))
         ;
 
-        $listener = new TagListener(get_class($tag), true);
-        $listener->onFlush($args);
+        $subscriber = new TagSubscriber(get_class($tag), true);
+        $subscriber->onFlush($args);
     }
 
     public function testSetTags()
@@ -121,7 +129,7 @@ class TagListenerTest extends \PHPUnit_Framework_TestCase
         $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue(array()));
         $uow->expects($this->once())->method('getScheduledEntityDeletions')->will($this->returnValue(array()));
 
-        $listener = new TagListener(get_class($tag), true);
-        $listener->onFlush($args);
+        $subscriber = new TagSubscriber(get_class($tag), true);
+        $subscriber->onFlush($args);
     }
 }

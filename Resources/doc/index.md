@@ -6,6 +6,7 @@ BeelabTagBundle Documentation
 1. [Installation](#1-installation)
 2. [Configuration](#2-configuration)
 3. [Usage](#3-usage)
+4. [Other bundles](#4-other-bundles)
 
 ### 1. Installation
 
@@ -29,6 +30,7 @@ public function registerBundles()
     );
 }
 ```
+See also [Other bundles](#4-other-bundles) for a note about registering order.
 
 ### 2. Configuration
 
@@ -292,3 +294,14 @@ class Article implements TaggableInterface
 Note that you need to change something in your Entity when ``$tagsText`` is updated,
 otherwise flush is not triggered and tags won't work. In example above, we're using
 an ``$updated`` DateTime property.
+
+### 4. Other bundles
+
+This bundle register a Doctrine subscriber that listens to ``onFlush`` event.
+If you use this bundle together with other bundles that register subscribers on the same
+event, you can experience some issues. In such cases, be sure to register this bundle
+*before* other bundles inside ``AppKenerel.php``.
+
+For example, if you set a slug on your Tag entity, using
+[StofDoctrineExtensionsBundle](https://github.com/stof/StofDoctrineExtensionsBundle), sluggable will work only
+if you register this bundle before StofDoctrineExtensionsBundle.

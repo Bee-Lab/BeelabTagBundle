@@ -5,10 +5,10 @@
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="beelab.tag.listener" class="Beelab\TagBundle\Listener\TagListener" >
+        <service id="beelab.tag.subscriber" class="Beelab\TagBundle\Listener\TagSubscriber" public="false">
             <argument>%beelab_tag.tag_class%</argument>
             <argument>%beelab_tag.purge%</argument>
-            <tag name="doctrine.event_listener" event="onFlush" />
+            <tag name="doctrine.event_subscriber"/>
         </service>
     </services>
 

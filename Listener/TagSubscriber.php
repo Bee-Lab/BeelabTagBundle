@@ -4,13 +4,14 @@ namespace Beelab\TagBundle\Listener;
 
 use Beelab\TagBundle\Tag\TagInterface;
 use Beelab\TagBundle\Tag\TaggableInterface;
+use Doctrine\Common\EventSubscriber;
 use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 
 /**
  * Add tags to entities that implements TaggableInterface
  */
-class TagListener
+class TagSubscriber implements EventSubscriber
 {
     /**
      * @var \Doctrine\ORM\EntityManager
@@ -48,6 +49,14 @@ class TagListener
             throw new \InvalidArgumentException(sprintf('Class "%s" must implement TagInterface.', $tagClassName));
         }
         $this->purge = $purge;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSubscribedEvents()
+    {
+        return array('onFlush');
     }
 
     /**

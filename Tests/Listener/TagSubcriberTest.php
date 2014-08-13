@@ -12,7 +12,7 @@ use Beelab\TagBundle\Test\TaggableStub3;
 /**
  * @group unit
  */
-class TagSubcriberTest extends \PHPUnit_Framework_TestCase
+class TagSubscriberTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @expectedException Doctrine\Common\Persistence\Mapping\MappingException
@@ -46,6 +46,7 @@ class TagSubcriberTest extends \PHPUnit_Framework_TestCase
         $repo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
         $metadata = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')->disableOriginalConstructor()->getMock();
+        $tagsCollection = $this->getMockBuilder('Doctrine\Common\Collections\Collection')->disableOriginalConstructor()->getMock();
 
         $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($em));
         $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
@@ -62,6 +63,7 @@ class TagSubcriberTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array(new TaggableStub2())))
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
+        $tag->expects($this->any())->method('getTags')->will($this->returnValue($tagsCollection));
 
         $subscriber = new TagSubscriber(get_class($tag));
         $subscriber->onFlush($args);

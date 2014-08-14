@@ -297,11 +297,8 @@ an ``$updated`` DateTime property.
 
 ### 4. Other bundles
 
-This bundle register a Doctrine subscriber that listens to ``onFlush`` event.
+This bundle register a Doctrine subscriber that listens to ``onFlush`` event with priority 10.
 If you use this bundle together with other bundles that register subscribers on the same
-event, you can experience some issues. In such cases, be sure to register this bundle
-*before* other bundles inside ``AppKenerel.php``.
+event, you could experience some issues in case of higher priority.
 
-For example, if you set a slug on your Tag entity, using
-[StofDoctrineExtensionsBundle](https://github.com/stof/StofDoctrineExtensionsBundle), sluggable will work only
-if you register this bundle before StofDoctrineExtensionsBundle.
+If this case even occurs, feel free to open a Pull Request.

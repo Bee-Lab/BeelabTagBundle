@@ -39,9 +39,8 @@ Example:
 
 ```php
 <?php
-// src/Acme/DemoBundle/Entity
-
-namespace Acme\DemoBundle\Entity;
+// src/AppBundle/Entity
+namespace AppBundle\Entity;
 
 use Beelab\TagBundle\Tag\TagInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -49,7 +48,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Tag
  *
- * @ORM\Table(name="tag")
+ * @ORM\Table()
  * @ORM\Entity()
  */
 class Tag implements TagInterface
@@ -120,7 +119,7 @@ Insert in main configuration:
 
 # BeelabTag Configuration
 beelab_tag:
-    tag_class: Acme\DemoBundle\Entity\Tag
+    tag_class: AppBundle\Entity\Tag
     purge: true
 ```
 
@@ -135,9 +134,8 @@ Suppose you want to use tags on an ``Article`` entity:
 
 ```php
 <?php
-// src/Acme/DemoBundle/Entity
-
-namespace Acme\DemoBundle\Entity;
+// src/AppBundle/Entity
+namespace AppBundle\Entity;
 
 use Beelab\TagBundle\Tag\TagInterface;
 use Beelab\TagBundle\Tag\TaggableInterface;
@@ -147,7 +145,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Article
  *
- * @ORM\Table(name="article")
+ * @ORM\Table()
  * @ORM\Entity()
  */
 class Article implements TaggableInterface
@@ -172,7 +170,7 @@ class Article implements TaggableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      *
      * @return Article
      */
@@ -184,7 +182,7 @@ class Article implements TaggableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function removeTag(TagInterface $tag)
     {
@@ -192,7 +190,7 @@ class Article implements TaggableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function hasTag(TagInterface $tag)
     {
@@ -200,7 +198,7 @@ class Article implements TaggableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTags()
     {
@@ -208,7 +206,7 @@ class Article implements TaggableInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTagNames()
     {
@@ -223,8 +221,7 @@ Most simple usage is in a Form like this one:
 
 ```php
 <?php
-// src/Acme/DemoBundle/Form/Type/ArticleFormType
-
+// src/AppBundle/Form/Type/ArticleFormType
 namespace Acme\DemoBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -247,7 +244,7 @@ Then, add a ``$tagsText`` property to your entity:
 
 ```php
 <?php
-// src/Acme/DemoBundle/Entity
+// src/AppBundle/Entity
 
 // use...
 

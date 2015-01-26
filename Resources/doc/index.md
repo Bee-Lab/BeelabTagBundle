@@ -254,6 +254,9 @@ class Article implements TaggableInterface
 
     protected $tagsText;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
     protected $updated;
 
     // ...

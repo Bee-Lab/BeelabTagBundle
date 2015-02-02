@@ -255,7 +255,7 @@ class Article implements TaggableInterface
     protected $tagsText;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime", nullable="true")
      */
     protected $updated;
 
@@ -294,6 +294,45 @@ class Article implements TaggableInterface
 Note that you need to change something in your Entity when ``$tagsText`` is updated,
 otherwise flush is not triggered and tags won't work. In example above, we're using
 an ``$updated`` DateTime property.
+
+Instead of implementing ``TaggableInterface``, you can extend ``AbstractTag``, like in this example:
+```php
+<?php
+// src/AppBundle/Entity
+namespace AppBundle\Entity;
+
+use Beelab\TagBundle\Entity\AbstractTag;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Article
+ *
+ * @ORM\Table()
+ * @ORM\Entity()
+ */
+class Article extends AbstractTag
+{
+    /**
+     * @ORM\Column(type="datetime", nullable="true")
+     */
+    protected $updated;
+
+    /**
+     * Set tags text
+     *
+     * @param  string   $tagsText
+     * @return Article
+     */
+    public function setTagsText($tagsText)
+    {
+        $this->updated = new \DateTime();
+
+        return parent::setTagsText($tagsText);
+    }
+}
+```
+This is much simpler, but of course also less flexible.
+Please note that if your entity needs a constructor, you need to call ``parent::__construct()`` inside it.
 
 ### 4. Other bundles
 

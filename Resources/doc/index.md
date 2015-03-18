@@ -13,7 +13,7 @@ BeelabTagBundle Documentation
 Run from terminal:
 
 ```bash
-$ php composer.phar require beelab/tag-bundle:1.0.*
+$ php composer.phar require beelab/tag-bundle
 ```
 
 Enable bundle in the kernel:

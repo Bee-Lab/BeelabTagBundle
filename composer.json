@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Provide tags for Doctrine entities",
     "keywords": ["Tag"],
-    "homepage": "http://bee-lab.net",
+    "homepage": "https://bee-lab.net",
     "license": "LGPL-3.0",
     "authors": [
         {
@@ -23,7 +23,6 @@
         "bin-dir": "bin"
     },
     "autoload": {
-        "psr-0": { "Beelab\\TagBundle": "" }
-    },
-    "target-dir": "Beelab/TagBundle"
+        "psr-4": { "Beelab\\TagBundle\\": "" }
+    }
 }

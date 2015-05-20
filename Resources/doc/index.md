@@ -7,6 +7,7 @@ BeelabTagBundle Documentation
 2. [Configuration](#2-configuration)
 3. [Usage](#3-usage)
 4. [Other bundles](#4-other-bundles)
+5. [Javascript enhancement](#5-javascript-enhancement)
 
 ### 1. Installation
 
@@ -348,3 +349,11 @@ If you use this bundle together with other bundles that register subscribers on 
 event, you could experience some issues in case of higher priority.
 
 If this case even occurs, feel free to open a Pull Request.
+
+### 5. Javascript enhancement
+
+If you want to enhance user experience with a bit of Javascript/AJAX, read this [small cookbook](javascript.md).
+
+Here is a sneak preview of what you'll get.
+
+![tag](https://cloud.githubusercontent.com/assets/179866/7724813/3e1d5b50-fef5-11e4-83f1-e05615518548.png)

@@ -100,9 +100,9 @@ class TagSubscriber implements EventSubscriber
         $tagNames = $entity->getTagNames();
 
         // need to clone here, to avoid getting new tags
-        $oldTags          = is_object($entityTags = $entity->getTags()) ? clone $entityTags : $entityTags;
+        $oldTags = is_object($entityTags = $entity->getTags()) ? clone $entityTags : $entityTags;
         $tagClassMetadata = $this->em->getClassMetadata(get_class($this->tag));
-        $repository       = $this->em->getRepository(get_class($this->tag));
+        $repository = $this->em->getRepository(get_class($this->tag));
 
         if (empty($tagNames)) {
             // if all previous present tags are removed, we need to clear the tags collection

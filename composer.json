@@ -7,13 +7,13 @@
     "license": "LGPL-3.0",
     "authors": [
         {
-            "name": "Massimiliano Arione ",
+            "name": "Massimiliano Arione",
             "email": "massimiliano.arione@bee-lab.net"
         }
     ],
     "require": {
         "php": ">=5.3.8",
-        "symfony/symfony": "~2.3",
+        "symfony/symfony": "~2.3|~3.0",
         "doctrine/orm": "~2.2,>=2.2.3"
     },
     "require-dev": {
@@ -24,5 +24,10 @@
     },
     "autoload": {
         "psr-4": { "Beelab\\TagBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.1.x-dev"
+        }
     }
 }

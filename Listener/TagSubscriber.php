@@ -9,7 +9,7 @@ use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 
 /**
- * Add tags to entities that implements TaggableInterface
+ * Add tags to entities that implements TaggableInterface.
  */
 class TagSubscriber implements EventSubscriber
 {
@@ -34,10 +34,10 @@ class TagSubscriber implements EventSubscriber
     protected $purge;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param string  $tagClassName
-     * @param boolean $purge        whether to delete tags when entity is deleted
+     * @param string $tagClassName
+     * @param bool   $purge        whether to delete tags when entity is deleted
      */
     public function __construct($tagClassName, $purge = false)
     {
@@ -61,7 +61,7 @@ class TagSubscriber implements EventSubscriber
 
     /**
      * Main method: get all entities scheduled to be inserted, updated or deleted,
-     * then remove duplicates and call setTags() method
+     * then remove duplicates and call setTags() method.
      *
      * @param OnFlushEventArgs $args
      */
@@ -90,10 +90,10 @@ class TagSubscriber implements EventSubscriber
     }
 
     /**
-     * Do the stuff
+     * Do the stuff.
      *
      * @param TaggableInterface $entity
-     * @param boolean           $update true if entity is being updated, false otherwise
+     * @param bool              $update true if entity is being updated, false otherwise
      */
     protected function setTags(TaggableInterface $entity, $update = false)
     {
@@ -136,7 +136,7 @@ class TagSubscriber implements EventSubscriber
     /**
      * Purge oprhan tags
      * Warning: DO NOT purge tags if you have more than one entity
-     * with tags, since this could lead to costraint violations
+     * with tags, since this could lead to costraint violations.
      *
      * @param TaggableInterface $entity
      */

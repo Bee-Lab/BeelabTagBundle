@@ -98,7 +98,7 @@ class TagSubscriberTest extends \PHPUnit_Framework_TestCase
 
     public function testOnFlushWithPurge()
     {
-        $tag = new \Beelab\TagBundle\Test\TagStub;
+        $tag = new TagStub();
         $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
         $em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();

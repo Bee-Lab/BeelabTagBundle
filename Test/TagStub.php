@@ -5,12 +5,12 @@ namespace Beelab\TagBundle\Test;
 use Beelab\TagBundle\Tag\TagInterface;
 
 /**
- * A stub of a Tag class
+ * A stub of a Tag class.
  */
 class TagStub implements TagInterface
 {
     /**
-     * Set name
+     * Set name.
      *
      * @param string $name
      */
@@ -19,7 +19,7 @@ class TagStub implements TagInterface
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */
@@ -29,7 +29,7 @@ class TagStub implements TagInterface
     }
 
     /**
-     * Get name
+     * Get name.
      *
      * @return string
      */

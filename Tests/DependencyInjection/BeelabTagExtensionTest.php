@@ -19,7 +19,7 @@ class BeelabTagExtensionTest extends PHPUnit_Framework_TestCase
         $extension = new BeelabTagExtension();
         $configs = array(
             array('tag_class' => 'foo'),
-            array('purge'     => false),
+            array('purge' => false),
         );
         $extension->load($configs, $container);
     }

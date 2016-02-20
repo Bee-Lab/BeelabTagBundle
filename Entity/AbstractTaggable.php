@@ -8,13 +8,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Abstract Taggable class
- * You can extend this class in your Entity
+ * You can extend this class in your Entity.
  */
 abstract class AbstractTaggable implements TaggableInterface
 {
     /**
      * @var ArrayCollection
-     * Override this property in your Entity with definition of ManyToMany relation
+     *                      Override this property in your Entity with definition of ManyToMany relation
      */
     protected $tags;
 
@@ -24,7 +24,7 @@ abstract class AbstractTaggable implements TaggableInterface
     protected $tagsText;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -75,9 +75,10 @@ abstract class AbstractTaggable implements TaggableInterface
 
     /**
      * Set tags text
-     * Override this method in your Entity and update a field here
+     * Override this method in your Entity and update a field here.
      *
-     * @param  string            $tagsText
+     * @param string $tagsText
+     *
      * @return TaggableInterface
      */
     public function setTagsText($tagsText)
@@ -88,7 +89,7 @@ abstract class AbstractTaggable implements TaggableInterface
     }
 
     /**
-     * Get tags text
+     * Get tags text.
      *
      * @return string
      */

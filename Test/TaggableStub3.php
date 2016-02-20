@@ -3,12 +3,12 @@
 namespace Beelab\TagBundle\Test;
 
 /**
- * A third stub of a Taggable class
+ * A third stub of a Taggable class.
  */
 class TaggableStub3 extends TaggableStub
 {
     /**
-     * Get names of tags
+     * Get names of tags.
      *
      * @return array
      */

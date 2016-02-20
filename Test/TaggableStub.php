@@ -6,12 +6,12 @@ use Beelab\TagBundle\Tag\TagInterface;
 use Beelab\TagBundle\Tag\TaggableInterface;
 
 /**
- * A stub of a Taggable class
+ * A stub of a Taggable class.
  */
 class TaggableStub implements TaggableInterface
 {
     /**
-     * Add tag
+     * Add tag.
      *
      * @param TagInterface $tag
      */
@@ -20,7 +20,7 @@ class TaggableStub implements TaggableInterface
     }
 
     /**
-     * Get names of tags
+     * Get names of tags.
      *
      * @return array
      */
@@ -30,7 +30,7 @@ class TaggableStub implements TaggableInterface
     }
 
     /**
-     * Get tags
+     * Get tags.
      *
      * @return array|ArrayCollection
      */
@@ -40,17 +40,18 @@ class TaggableStub implements TaggableInterface
     }
 
     /**
-     * Has tag
+     * Has tag.
      *
-     * @param  TagInterface $tag
-     * @return boolean
+     * @param TagInterface $tag
+     *
+     * @return bool
      */
     public function hasTag(TagInterface $tag)
     {
     }
 
     /**
-     * Remove tag
+     * Remove tag.
      *
      * @param TagInterface $tag
      */

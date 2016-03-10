@@ -161,14 +161,10 @@ class Article implements TaggableInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return Article
      */
     public function addTag(TagInterface $tag)
     {
         $this->tags[] = $tag;
-
-        return $this;
     }
 
     /**

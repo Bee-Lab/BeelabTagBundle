@@ -98,33 +98,37 @@ class TagSubscriber implements EventSubscriber
     protected function setTags(TaggableInterface $entity, $update = false)
     {
         $tagNames = $entity->getTagNames();
-        if (empty($tagNames)) {
-            return;
-        }
+
         // need to clone here, to avoid getting new tags
         $oldTags = is_object($entityTags = $entity->getTags()) ? clone $entityTags : $entityTags;
         $tagClassMetadata = $this->em->getClassMetadata(get_class($this->tag));
         $repository = $this->em->getRepository(get_class($this->tag));
-        foreach ($tagNames as $tagName) {
-            $tag = $repository->findOneByName($tagName);
-            if (empty($tag)) {
-                // if tag doesn't exist, create it
-                $tag = clone $this->tag;
-                $tag->setName($tagName);
-                $this->em->persist($tag);
-                // see http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#onflush
-                $this->uow->computeChangeSet($tagClassMetadata, $tag);
+
+        if (empty($tagNames)) {
+            // if all previous present tags are removed, we need to clear the tags collection
+            $entity->getTags()->clear();
+        } else {
+            foreach ($tagNames as $tagName) {
+                $tag = $repository->findOneByName($tagName);
+                if (empty($tag)) {
+                    // if tag doesn't exist, create it
+                    $tag = clone $this->tag;
+                    $tag->setName($tagName);
+                    $this->em->persist($tag);
+                    // see http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#onflush
+                    $this->uow->computeChangeSet($tagClassMetadata, $tag);
+                }
+                if (!$entity->hasTag($tag)) {
+                    // add tag only if not already added
+                    $entity->addTag($tag);
+                }
             }
-            if (!$entity->hasTag($tag)) {
-                // add tag only if not already added
-                $entity->addTag($tag);
-            }
-        }
-        // if updating, need to check if some tags were removed
-        if ($update) {
-            foreach ($oldTags as $oldTag) {
-                if (!in_array($oldTag->getName(), $tagNames)) {
-                    $entity->removeTag($oldTag);
+            // if updating, need to check if some tags were removed
+            if ($update) {
+                foreach ($oldTags as $oldTag) {
+                    if (!in_array($oldTag->getName(), $tagNames)) {
+                        $entity->removeTag($oldTag);
+                    }
                 }
             }
         }

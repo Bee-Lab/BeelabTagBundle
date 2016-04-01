@@ -60,8 +60,8 @@ class TagSubscriber implements EventSubscriber
     }
 
     /**
-     * Main method: get all entities scheduled to be inserted, updated or deleted,
-     * then remove duplicates and call setTags() method.
+     * Main method: call setTags() on entities scheduled to be inserted or updated, and
+     * possibly call purgeTags() on entities scheduled to be deleted.
      *
      * @param OnFlushEventArgs $args
      */
@@ -69,13 +69,12 @@ class TagSubscriber implements EventSubscriber
     {
         $this->em = $args->getEntityManager();
         $this->uow = $this->em->getUnitOfWork();
-        $entities = $this->uow->getScheduledEntityInsertions();
-        foreach ($this->uow->getScheduledEntityUpdates() as $key => $entity) {
-            if (!in_array($entity, $entities)) {
-                $entities[$key] = $entity;
+        foreach ($this->uow->getScheduledEntityInsertions() as $key => $entity) {
+            if ($entity instanceof TaggableInterface) {
+                $this->setTags($entity, false);
             }
         }
-        foreach ($entities as $entity) {
+        foreach ($this->uow->getScheduledEntityUpdates() as $key => $entity) {
             if ($entity instanceof TaggableInterface) {
                 $this->setTags($entity, true);
             }
@@ -98,7 +97,7 @@ class TagSubscriber implements EventSubscriber
     protected function setTags(TaggableInterface $entity, $update = false)
     {
         $tagNames = $entity->getTagNames();
-        if (empty($tagNames)) {
+        if (empty($tagNames) && !$update) {
             return;
         }
         // need to clone here, to avoid getting new tags

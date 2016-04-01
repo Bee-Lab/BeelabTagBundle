@@ -47,15 +47,13 @@ use Beelab\TagBundle\Tag\TagInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Tag
- *
  * @ORM\Table()
  * @ORM\Entity()
  */
 class Tag implements TagInterface
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -79,9 +77,7 @@ class Tag implements TagInterface
     }
 
     /**
-     * Get id
-     *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -89,21 +85,14 @@ class Tag implements TagInterface
     }
 
     /**
-     * Set name
-     *
-     * @param  string $name
-     * @return Tag
+     * @param string $name
      */
     public function setName($name)
     {
         $this->name = $name;
-
-        return $this;
     }
 
     /**
-     * Get name
-     *
      * @return string
      */
     public function getName()
@@ -172,14 +161,10 @@ class Article implements TaggableInterface
 
     /**
      * {@inheritdoc}
-     *
-     * @return Article
      */
     public function addTag(TagInterface $tag)
     {
         $this->tags[] = $tag;
-
-        return $this;
     }
 
     /**
@@ -234,6 +219,7 @@ class ArticleFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            // use FQCN here instead of 'text', for Symfony >= 2.8
             ->add('tagsText', 'text', array('required' => false, 'label' => 'Tags'))
             // other fields...
         ;
@@ -263,22 +249,15 @@ class Article implements TaggableInterface
     // ...
 
     /**
-     * Set tags text
-     *
-     * @param  string
-     * @return Article
+     * @param string
      */
     public function setTagsText($tagsText)
     {
         $this->tagsText = $tagsText;
         $this->updated = new \DateTime();
-
-        return $this;
     }
 
     /**
-     * Get tags text
-     *
      * @return string
      */
     public function getTagsText()
@@ -326,10 +305,7 @@ class Article extends AbstractTaggable
     protected $updated;
 
     /**
-     * Set tags text
-     *
-     * @param  string   $tagsText
-     * @return Article
+     * @param string $tagsText
      */
     public function setTagsText($tagsText)
     {

@@ -39,7 +39,7 @@ Create a template like the following:
 
 #### 3. Form
 
-Your form needs to know the ``tags`` route. Here is an example:
+Your form needs to know the `tags` route. Here is an example:
 
 ```php
 <?php
@@ -47,12 +47,9 @@ Your form needs to know the ``tags`` route. Here is an example:
 namespace AppBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
-/**
- * Tags text Type
- */
 class TagsTextType extends AbstractType
 {
     /**
@@ -71,24 +68,16 @@ class TagsTextType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'required' => false,
-            'label'    => 'Tag',
-            'attr'     => [
+            'label' => 'Tags',
+            'attr' => [
                 'placeholder' => 'separate tags with comma',
-                'data-ajax'   => $this->router->generate('tags'),
+                'data-ajax' => $this->router->generate('tags'),
             ],
         ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return 'tagsText';
     }
 
     /**
@@ -108,7 +97,7 @@ Add this snippet to your Javascript:
 
 ```js
 $(document).ready(function () {
-(function () {
+    (function () {
         var $tagInput = $('input[name$="[tagsText]"]');
         function tags($input) {
             $input.attr('type', 'hidden').select2({
@@ -168,6 +157,5 @@ $(document).ready(function () {
     }());
 });
 ```
-
 
 [← back to documentation index](index.md)

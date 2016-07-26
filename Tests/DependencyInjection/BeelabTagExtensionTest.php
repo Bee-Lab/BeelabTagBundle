@@ -17,10 +17,10 @@ class BeelabTagExtensionTest extends PHPUnit_Framework_TestCase
         $container->expects($this->any())->method('getParameterBag')->will($this->returnValue($parameterBag));
 
         $extension = new BeelabTagExtension();
-        $configs = array(
-            array('tag_class' => 'foo'),
-            array('purge' => false),
-        );
+        $configs = [
+            ['tag_class' => 'foo'],
+            ['purge' => false],
+        ];
         $extension->load($configs, $container);
     }
 }

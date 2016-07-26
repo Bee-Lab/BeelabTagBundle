@@ -56,7 +56,7 @@ class TagSubscriber implements EventSubscriber
      */
     public function getSubscribedEvents()
     {
-        return array('onFlush');
+        return ['onFlush'];
     }
 
     /**

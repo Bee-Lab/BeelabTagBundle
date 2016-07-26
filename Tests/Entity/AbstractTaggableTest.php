@@ -47,6 +47,6 @@ class AbstractTaggableTest extends \PHPUnit_Framework_TestCase
     {
         $tag = $this->getMock('Beelab\TagBundle\Tag\TagInterface');
         $entity = new Entity();
-        $this->assertEquals(array(), $entity->getTagNames());
+        $this->assertEquals([], $entity->getTagNames());
     }
 }

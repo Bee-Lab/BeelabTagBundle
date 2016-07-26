@@ -70,7 +70,7 @@ abstract class AbstractTaggable implements TaggableInterface
      */
     public function getTagNames()
     {
-        return empty($this->tagsText) ? array() : array_map('trim', explode(',', $this->tagsText));
+        return empty($this->tagsText) ? [] : array_map('trim', explode(',', $this->tagsText));
     }
 
     /**

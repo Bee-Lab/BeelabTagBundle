@@ -55,12 +55,12 @@ class TagSubscriberTest extends \PHPUnit_Framework_TestCase
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityInsertions')
-            ->will($this->returnValue(array(new TaggableStub(), new NonTaggableStub())))
+            ->will($this->returnValue([new TaggableStub(), new NonTaggableStub()]))
         ;
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityUpdates')
-            ->will($this->returnValue(array(new TaggableStub2())))
+            ->will($this->returnValue([new TaggableStub2()]))
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
         $tag->expects($this->any())->method('getTags')->will($this->returnValue($tagsCollection));
@@ -83,12 +83,12 @@ class TagSubscriberTest extends \PHPUnit_Framework_TestCase
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityInsertions')
-            ->will($this->returnValue(array()))
+            ->will($this->returnValue([]))
         ;
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityUpdates')
-            ->will($this->returnValue(array(new TaggableStub3())))
+            ->will($this->returnValue([new TaggableStub3()]))
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 
@@ -110,12 +110,12 @@ class TagSubscriberTest extends \PHPUnit_Framework_TestCase
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityInsertions')
-            ->will($this->returnValue(array(new TaggableStub3())))
+            ->will($this->returnValue([new TaggableStub3()]))
         ;
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityUpdates')
-            ->will($this->returnValue(array()))
+            ->will($this->returnValue([]))
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 
@@ -132,12 +132,12 @@ class TagSubscriberTest extends \PHPUnit_Framework_TestCase
 
         $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($em));
         $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
-        $uow->expects($this->once())->method('getScheduledEntityInsertions')->will($this->returnValue(array()));
-        $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue(array()));
+        $uow->expects($this->once())->method('getScheduledEntityInsertions')->will($this->returnValue([]));
+        $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue([]));
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityDeletions')
-            ->will($this->returnValue(array(new TaggableStub())))
+            ->will($this->returnValue([new TaggableStub()]))
         ;
 
         $subscriber = new TagSubscriber(get_class($tag), true);
@@ -154,9 +154,9 @@ class TagSubscriberTest extends \PHPUnit_Framework_TestCase
         $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($em));
         $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
         // TODO create some stubs of taggable entities and non-taggable entities...
-        $uow->expects($this->once())->method('getScheduledEntityInsertions')->will($this->returnValue(array($tag)));
-        $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue(array()));
-        $uow->expects($this->once())->method('getScheduledEntityDeletions')->will($this->returnValue(array()));
+        $uow->expects($this->once())->method('getScheduledEntityInsertions')->will($this->returnValue([$tag]));
+        $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue([]));
+        $uow->expects($this->once())->method('getScheduledEntityDeletions')->will($this->returnValue([]));
 
         $subscriber = new TagSubscriber(get_class($tag), true);
         $subscriber->onFlush($args);

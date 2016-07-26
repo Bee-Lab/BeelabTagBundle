@@ -1,9 +1,9 @@
 {
     "name": "beelab/tag-bundle",
     "type": "symfony-bundle",
-    "description": "Provide tags for Doctrine entities",
-    "keywords": ["Tag"],
-    "homepage": "https://bee-lab.net",
+    "description": "Provide tags for Doctrine entities in Symfony",
+    "keywords": ["Tag", "Tags", "Symfony"],
+    "homepage": "https://github.com/bee-lab/",
     "license": "LGPL-3.0",
     "authors": [
         {
@@ -12,8 +12,8 @@
         }
     ],
     "require": {
-        "php": ">=5.3.8",
-        "symfony/symfony": "~2.3|~3.0",
+        "php": ">=5.5",
+        "symfony/symfony": "~2.7|~3.0",
         "doctrine/orm": "~2.4"
     },
     "require-dev": {
@@ -27,7 +27,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.1.x-dev"
+            "dev-master": "1.2.x-dev"
         }
     }
 }

@@ -26,7 +26,7 @@ class TaggableStub implements TaggableInterface
      */
     public function getTagNames()
     {
-        return array('foo', 'bar');
+        return ['foo', 'bar'];
     }
 
     /**
@@ -36,7 +36,7 @@ class TaggableStub implements TaggableInterface
      */
     public function getTags()
     {
-        return array(new TagStub());
+        return [new TagStub()];
     }
 
     /**

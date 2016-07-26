@@ -14,6 +14,6 @@ class TaggableStub3 extends TaggableStub
      */
     public function getTagNames()
     {
-        return array();
+        return [];
     }
 }

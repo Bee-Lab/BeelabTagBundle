@@ -6,7 +6,7 @@ BeelabTagBundle
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/87695a35-3024-44a9-84ea-275a30cb6254/big.png)](https://insight.sensiolabs.com/projects/87695a35-3024-44a9-84ea-275a30cb6254)
 [![knpbundles.com](http://knpbundles.com/Bee-Lab/BeelabTagBundle/badge)](http://knpbundles.com/Bee-Lab/BeelabTagBundle)
 
-This bundle is a simple implementation of tags for Symfony2 and Doctrine ORM.
+This bundle is a simple implementation of tags for Symfony and Doctrine ORM.
 
 Documentation
 -------------

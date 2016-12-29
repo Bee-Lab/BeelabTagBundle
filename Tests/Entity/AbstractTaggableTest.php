@@ -11,7 +11,7 @@ class AbstractTaggableTest extends \PHPUnit_Framework_TestCase
 {
     public function testHasTag()
     {
-        $tag = $this->getMock('Beelab\TagBundle\Tag\TagInterface');
+        $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $entity = new Entity();
         $entity->addTag($tag);
         $this->assertTrue($entity->hasTag($tag));
@@ -19,7 +19,7 @@ class AbstractTaggableTest extends \PHPUnit_Framework_TestCase
 
     public function testRemoveTag()
     {
-        $tag = $this->getMock('Beelab\TagBundle\Tag\TagInterface');
+        $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $entity = new Entity();
         $entity->addTag($tag);
         $entity->removeTag($tag);
@@ -28,7 +28,7 @@ class AbstractTaggableTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTags()
     {
-        $tag = $this->getMock('Beelab\TagBundle\Tag\TagInterface');
+        $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $entity = new Entity();
         $entity->addTag($tag);
         $this->assertCount(1, $entity->getTags());
@@ -36,8 +36,7 @@ class AbstractTaggableTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTagsText()
     {
-        $tag = $this->getMock('Beelab\TagBundle\Tag\TagInterface');
-        #$tag->expects($this->once())->method('__toString')->will($this->returnValue('foo'));
+        $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $entity = new Entity();
         $entity->setTagsText('foo, bar, baz');
         $this->assertEquals('', $entity->getTagsText());
@@ -45,7 +44,7 @@ class AbstractTaggableTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTagNames()
     {
-        $tag = $this->getMock('Beelab\TagBundle\Tag\TagInterface');
+        $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $entity = new Entity();
         $this->assertEquals([], $entity->getTagNames());
     }

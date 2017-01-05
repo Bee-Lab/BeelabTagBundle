@@ -25,10 +25,10 @@ Enable bundle in the kernel:
 
 public function registerBundles()
 {
-    $bundles = array(
+    $bundles = [
         // ...
         new Beelab\TagBundle\BeelabTagBundle(),
-    );
+    ];
 }
 ```
 See also [Other bundles](#4-other-bundles) for a note about registering order.
@@ -196,7 +196,7 @@ class Article implements TaggableInterface
      */
     public function getTagNames()
     {
-        return empty($this->tagsText) ? array() : array_map('trim', explode(',', $this->tagsText));
+        return empty($this->tagsText) ? [] : array_map('trim', explode(',', $this->tagsText));
     }
 }
 ```
@@ -220,7 +220,7 @@ class ArticleFormType extends AbstractType
     {
         $builder
             // use FQCN here instead of 'text', for Symfony >= 2.8
-            ->add('tagsText', 'text', array('required' => false, 'label' => 'Tags'))
+            ->add('tagsText', 'Symfony\Component\Form\Extension\Core\Type\TextType', ['required' => false, 'label' => 'Tags'])
             // other fields...
         ;
     }

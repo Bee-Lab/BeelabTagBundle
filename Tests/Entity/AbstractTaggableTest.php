@@ -3,11 +3,12 @@
 namespace Beelab\TagBundle\Tests\Entity;
 
 use Beelab\TagBundle\Test\Entity;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * @group unit
  */
-class AbstractTaggableTest extends \PHPUnit_Framework_TestCase
+class AbstractTaggableTest extends TestCase
 {
     public function testHasTag()
     {

@@ -8,11 +8,12 @@ use Beelab\TagBundle\Test\TagStub;
 use Beelab\TagBundle\Test\TaggableStub;
 use Beelab\TagBundle\Test\TaggableStub2;
 use Beelab\TagBundle\Test\TaggableStub3;
+use PHPUnit_Framework_TestCase as TestCase;
 
 /**
  * @group unit
  */
-class TagSubscriberTest extends \PHPUnit_Framework_TestCase
+class TagSubscriberTest extends TestCase
 {
     /**
      * @expectedException \Doctrine\Common\Persistence\Mapping\MappingException

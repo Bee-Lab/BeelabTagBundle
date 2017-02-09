@@ -4,11 +4,11 @@ namespace Beelab\TagBundle\Tests\Listener;
 
 use Beelab\TagBundle\Listener\TagSubscriber;
 use Beelab\TagBundle\Test\NonTaggableStub;
-use Beelab\TagBundle\Test\TagStub;
 use Beelab\TagBundle\Test\TaggableStub;
 use Beelab\TagBundle\Test\TaggableStub2;
 use Beelab\TagBundle\Test\TaggableStub3;
-use PHPUnit_Framework_TestCase as TestCase;
+use Beelab\TagBundle\Test\TagStub;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group unit

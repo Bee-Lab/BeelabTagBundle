@@ -2,8 +2,8 @@
 
 namespace Beelab\TagBundle\Test;
 
-use Beelab\TagBundle\Tag\TagInterface;
 use Beelab\TagBundle\Tag\TaggableInterface;
+use Beelab\TagBundle\Tag\TagInterface;
 
 /**
  * A stub of a Taggable class.

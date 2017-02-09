@@ -3,7 +3,7 @@
 namespace Beelab\TagBundle\Tests\DependencyInjection;
 
 use Beelab\TagBundle\DependencyInjection\BeelabTagExtension;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 class BeelabTagExtensionTest extends TestCase
 {
@@ -24,5 +24,6 @@ class BeelabTagExtensionTest extends TestCase
             ['purge' => false],
         ];
         $extension->load($configs, $container);
+        $this->assertTrue(true);
     }
 }

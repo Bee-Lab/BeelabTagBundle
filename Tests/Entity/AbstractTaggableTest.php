@@ -3,7 +3,7 @@
 namespace Beelab\TagBundle\Tests\Entity;
 
 use Beelab\TagBundle\Test\Entity;
-use PHPUnit_Framework_TestCase as TestCase;
+use PHPUnit\Framework\TestCase;
 
 /**
  * @group unit

@@ -328,7 +328,7 @@ If this case even occurs, feel free to open a Pull Request.
 
 ### 5. Javascript enhancement
 
-If you want to enhance user experience with a bit of Javascript/AJAX, read this [small cookbook](javascript.md) or [simple javascript](simple-javascript.md).
+If you want to enhance user experience with a bit of Javascript/AJAX, read this [small cookbook](javascript.md).
 
 Here is a sneak preview of what you'll get.
 

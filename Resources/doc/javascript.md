@@ -1,7 +1,7 @@
 Javascript enhancement
 ======================
 
-You can enhance user experience with a bit of AJAX, making the tag inputact as a multiple select. You need
+You can enhance user experience with a bit of AJAX, making the tag input act as a multiple select. You need
 [Select2](http://select2.github.io/select2/).
 
 Here is a sneak preview of what you'll get.

@@ -71,7 +71,7 @@ class Tag implements TagInterface
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->name;
     }
@@ -79,7 +79,7 @@ class Tag implements TagInterface
     /**
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -212,6 +212,7 @@ namespace Acme\DemoBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 // ...
 
 class ArticleFormType extends AbstractType
@@ -219,8 +220,7 @@ class ArticleFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // use FQCN here instead of 'text', for Symfony >= 2.8
-            ->add('tagsText', 'Symfony\Component\Form\Extension\Core\Type\TextType', ['required' => false, 'label' => 'Tags'])
+            ->add('tagsText', TextType::class, ['required' => false, 'label' => 'Tags'])
             // other fields...
         ;
     }

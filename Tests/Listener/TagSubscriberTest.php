@@ -8,6 +8,9 @@ use Beelab\TagBundle\Test\TaggableStub;
 use Beelab\TagBundle\Test\TaggableStub2;
 use Beelab\TagBundle\Test\TaggableStub3;
 use Beelab\TagBundle\Test\TagStub;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\ClassMetadata;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -43,16 +46,16 @@ class TagSubscriberTest extends TestCase
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
-        $em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
+        $manager = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
         $repo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
-        $metadata = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')->disableOriginalConstructor()->getMock();
-        $tagsCollection = $this->getMockBuilder('Doctrine\Common\Collections\Collection')->disableOriginalConstructor()->getMock();
+        $metadata = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
+        $tagsCollection = $this->getMockBuilder(Collection::class)->disableOriginalConstructor()->getMock();
 
-        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($em));
-        $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
-        $em->expects($this->any())->method('getRepository')->will($this->returnValue($repo));
-        $em->expects($this->any())->method('getClassMetadata')->will($this->returnValue($metadata));
+        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($manager));
+        $manager->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
+        $manager->expects($this->any())->method('getRepository')->will($this->returnValue($repo));
+        $manager->expects($this->any())->method('getClassMetadata')->will($this->returnValue($metadata));
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityInsertions')
@@ -73,13 +76,13 @@ class TagSubscriberTest extends TestCase
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
-        $em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
+        $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
-        $metadata = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')->disableOriginalConstructor()->getMock();
+        $metadata = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
 
-        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($em));
-        $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
-        $em->expects($this->any())->method('getClassMetadata')->will($this->returnValue($metadata));
+        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($manager));
+        $manager->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
+        $manager->expects($this->any())->method('getClassMetadata')->will($this->returnValue($metadata));
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityInsertions')
@@ -100,13 +103,13 @@ class TagSubscriberTest extends TestCase
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
-        $em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
+        $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
-        $metadata = $this->getMockBuilder('Doctrine\ORM\Mapping\ClassMetadata')->disableOriginalConstructor()->getMock();
+        $metadata = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
 
-        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($em));
-        $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
-        $em->expects($this->any())->method('getClassMetadata')->will($this->returnValue($metadata));
+        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($manager));
+        $manager->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
+        $manager->expects($this->any())->method('getClassMetadata')->will($this->returnValue($metadata));
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityInsertions')
@@ -127,11 +130,11 @@ class TagSubscriberTest extends TestCase
     {
         $tag = new TagStub();
         $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
-        $em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
+        $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
 
-        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($em));
-        $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
+        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($manager));
+        $manager->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
         $uow->expects($this->once())->method('getScheduledEntityInsertions')->will($this->returnValue([]));
         $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue([]));
         $uow
@@ -148,11 +151,11 @@ class TagSubscriberTest extends TestCase
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
-        $em = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
+        $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
 
-        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($em));
-        $em->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
+        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($manager));
+        $manager->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
         // TODO create some stubs of taggable entities and non-taggable entities...
         $uow->expects($this->once())->method('getScheduledEntityInsertions')->will($this->returnValue([$tag]));
         $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue([]));

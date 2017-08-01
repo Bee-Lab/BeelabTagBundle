@@ -17,7 +17,7 @@ matrix:
         - php: 7.1
           env: SYMFONY_VERSION=3.2.* SYMFONY_DEPRECATIONS_HELPER=strict
         - php: nightly
-          env: SYMFONY_VERSION=3.2.* SYMFONY_DEPRECATIONS_HELPER=strict
+          env: SYMFONY_VERSION=3.3.* SYMFONY_DEPRECATIONS_HELPER=strict
     allow_failures:
         - php: nightly
 

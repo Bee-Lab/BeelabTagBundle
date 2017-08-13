@@ -38,6 +38,9 @@ class TagSubscriber implements EventSubscriber
      *
      * @param string $tagClassName
      * @param bool   $purge        whether to delete tags when entity is deleted
+     *
+     * @throws MappingException
+     * @throws \InvalidArgumentException
      */
     public function __construct(string $tagClassName, $purge = false)
     {

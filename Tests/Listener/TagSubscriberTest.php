@@ -8,8 +8,8 @@ use Beelab\TagBundle\Test\TaggableStub;
 use Beelab\TagBundle\Test\TaggableStub2;
 use Beelab\TagBundle\Test\TaggableStub3;
 use Beelab\TagBundle\Test\TagStub;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
 use PHPUnit\Framework\TestCase;
 
@@ -31,7 +31,7 @@ class TagSubscriberTest extends TestCase
      */
     public function testInvalidClass()
     {
-        $subscriber = new TagSubscriber('Beelab\TagBundle\Test\NonTaggableStub');
+        $subscriber = new TagSubscriber(NonTaggableStub::class);
     }
 
     public function testGetSubscribedEvents()
@@ -45,12 +45,11 @@ class TagSubscriberTest extends TestCase
     public function testOnFlush()
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
-        $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
-        $manager = $this->getMockBuilder('Doctrine\ORM\EntityManager')->disableOriginalConstructor()->getMock();
+        $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
+        $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $repo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
         $metadata = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
-        $tagsCollection = $this->getMockBuilder(Collection::class)->disableOriginalConstructor()->getMock();
 
         $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($manager));
         $manager->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
@@ -75,7 +74,7 @@ class TagSubscriberTest extends TestCase
     public function testOnFlushEntityWithoutTagsUpdate()
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
-        $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
+        $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
         $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
         $metadata = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
@@ -102,7 +101,7 @@ class TagSubscriberTest extends TestCase
     public function testOnFlushEntityWithoutTagsInsert()
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
-        $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
+        $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
         $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
         $metadata = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
@@ -129,7 +128,7 @@ class TagSubscriberTest extends TestCase
     public function testOnFlushWithPurge()
     {
         $tag = new TagStub();
-        $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
+        $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
         $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
 
@@ -150,7 +149,7 @@ class TagSubscriberTest extends TestCase
     public function testSetTags()
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
-        $args = $this->getMockBuilder('Doctrine\ORM\Event\OnFlushEventArgs')->disableOriginalConstructor()->getMock();
+        $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
         $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
 

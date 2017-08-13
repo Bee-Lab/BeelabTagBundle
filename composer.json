@@ -13,14 +13,15 @@
     ],
     "require": {
         "php": ">=7.0",
-        "symfony/symfony": "^2.8|^3.2",
-        "doctrine/orm": "^2.5"
+        "doctrine/orm": "^2.5",
+        "symfony/symfony": "^2.8|^3.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.0"
     },
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "bin",
+        "sort-packages": true
     },
     "autoload": {
         "psr-4": { "Beelab\\TagBundle\\": "" }

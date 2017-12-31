@@ -8,6 +8,7 @@ use Beelab\TagBundle\Test\TaggableStub;
 use Beelab\TagBundle\Test\TaggableStub2;
 use Beelab\TagBundle\Test\TaggableStub3;
 use Beelab\TagBundle\Test\TagStub;
+use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -18,19 +19,17 @@ use PHPUnit\Framework\TestCase;
  */
 class TagSubscriberTest extends TestCase
 {
-    /**
-     * @expectedException \Doctrine\Common\Persistence\Mapping\MappingException
-     */
     public function testNonexistentClass()
     {
+        $this->expectException(MappingException::class);
+
         $subscriber = new TagSubscriber('ClassDoesNotExist');
     }
 
-    /**
-     * @expectedException \InvalidArgumentException
-     */
     public function testInvalidClass()
     {
+        $this->expectException(\InvalidArgumentException::class);
+
         $subscriber = new TagSubscriber(NonTaggableStub::class);
     }
 

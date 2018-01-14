@@ -4,7 +4,7 @@
     "description": "Provide tags for Doctrine entities in Symfony",
     "keywords": ["Tag", "Tags", "Symfony"],
     "homepage": "https://github.com/bee-lab/",
-    "license": "LGPL-3.0",
+    "license": "LGPL-3.0-or-later",
     "authors": [
         {
             "name": "Massimiliano Arione",

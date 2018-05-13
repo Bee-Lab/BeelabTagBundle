@@ -24,8 +24,6 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('tag_class')
                     ->isRequired()
                 ->end()
-            ->end()
-            ->children()
                 ->booleanNode('purge')
                     ->defaultFalse()
                 ->end()

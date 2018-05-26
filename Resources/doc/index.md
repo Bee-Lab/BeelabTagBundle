@@ -14,10 +14,10 @@ BeelabTagBundle Documentation
 Run from terminal:
 
 ```bash
-$ php composer.phar require beelab/tag-bundle
+$ composer require beelab/tag-bundle
 ```
 
-Enable bundle in the kernel:
+If you still don't use Flex, you'll need to enable bundle in the kernel:
 
 ```php
 <?php
@@ -35,13 +35,14 @@ See also [Other bundles](#4-other-bundles) for a note about registering order.
 
 ### 2. Configuration
 
-Create a ``Tag`` entity class.
+Create a `Tag` entity class.
+Using Flex, a contrib recipe is creating such entity for you.
 Example:
 
 ```php
 <?php
-// src/AppBundle/Entity
-namespace AppBundle\Entity;
+// src/Entity/Tag.php
+namespace App\Entity;
 
 use Beelab\TagBundle\Tag\TagInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -102,31 +103,31 @@ class Tag implements TagInterface
 }
 ```
 
-Insert in main configuration:
+Following configuration is added by recipe:
 
 ```yaml
-# app/config/config.yml
+# config/packages/beelab_tag.yaml
 
 # BeelabTag Configuration
 beelab_tag:
-    tag_class: AppBundle\Entity\Tag
-    purge:     true
+    tag_class: App\Entity\Tag
+    purge: false
 ```
 
-> **Warning**: the ``purge`` option is not mandatory and defaults to ``false``. You should use this
-> option (with ``true`` value) only if you want to delete a tag when a taggable entity
+> **Warning**: the `purge` option is not mandatory and defaults to `false`. You should use this
+> option (with `true` value) only if you want to delete a tag when a taggable entity
 > is deleted. You should avoid purging tags if you configured more than a taggable entity,
 > since this could lead to constraint violations.
 
-Then you can create some entities that implement ``TaggableInteface``.
+Then you can create some entities that implement `TaggableInteface`.
 
-Suppose you want to use tags on an ``Article`` entity. You have two options: implementing ``TaggableInterface``
-(more flexible, showed here), or extending ``AbstractTaggable`` (simpler, showed later).
+Suppose you want to use tags on an `Article` entity. You have two options: implementing `TaggableInterface`
+(more flexible, showed here), or extending `AbstractTaggable` (simpler, showed later).
 
 ```php
 <?php
-// src/AppBundle/Entity
-namespace AppBundle\Entity;
+// src/Entity/Article.php
+namespace App\Entity;
 
 use Beelab\TagBundle\Tag\TagInterface;
 use Beelab\TagBundle\Tag\TaggableInterface;
@@ -134,8 +135,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Article
- *
  * @ORM\Table()
  * @ORM\Entity()
  */
@@ -146,7 +145,7 @@ class Article implements TaggableInterface
      *
      * @ORM\ManyToMany(targetEntity="Tag")
      */
-    protected $tags;
+    private $tags;
 
     // note: if you generated code with SensioGeneratorBundle, you need
     // to replace "Tag" with "TagInterface" where appropriate
@@ -207,7 +206,7 @@ Most simple usage is in a Form like this one:
 
 ```php
 <?php
-// src/AppBundle/Form/Type/ArticleFormType
+// src/Form/Type/ArticleFormType.php
 namespace Acme\DemoBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
@@ -227,11 +226,11 @@ class ArticleFormType extends AbstractType
 }
 ```
 
-Then, add a ``$tagsText`` property to your entity:
+Then, add a `$tagsText` property to your entity:
 
 ```php
 <?php
-// src/AppBundle/Entity
+// src/Entity/Article.php
 
 // use...
 
@@ -239,12 +238,12 @@ class Article implements TaggableInterface
 {
     // ...
 
-    protected $tagsText;
+    private $tagsText;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $updated;
+    private $updated;
 
     // ...
 
@@ -271,22 +270,21 @@ class Article implements TaggableInterface
 }
 ```
 
-Note that you need to change something in your Entity when ``$tagsText`` is updated,
+Note that you need to change something in your Entity when `$tagsText` is updated,
 otherwise flush is not triggered and tags won't work. In example above, we're using
-an ``$updated`` DateTime property.
+an `$updated` DateTime property.
 
-Instead of implementing ``TaggableInterface``, you can extend ``AbstractTag``, like in this example:
+Instead of implementing `TaggableInterface`, you can extend `AbstractTaggable`, like in this example:
+
 ```php
 <?php
-// src/AppBundle/Entity
-namespace AppBundle\Entity;
+// src/Entity/Article.php
+namespace App\Entity;
 
 use Beelab\TagBundle\Entity\AbstractTaggable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Article
- *
  * @ORM\Table()
  * @ORM\Entity()
  */
@@ -297,12 +295,12 @@ class Article extends AbstractTaggable
      *
      * @ORM\ManyToMany(targetEntity="Tag")
      */
-    protected $tags;
+    private $tags;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    protected $updated;
+    private $updated;
 
     /**
      * @param string $tagsText
@@ -315,12 +313,13 @@ class Article extends AbstractTaggable
     }
 }
 ```
+
 This is much simpler, but of course also less flexible.
-Please note that if your entity needs a constructor, you need to call ``parent::__construct()`` inside it.
+Please note that if your entity needs a constructor, you need to call `parent::__construct()` inside it.
 
 ### 4. Other bundles
 
-This bundle register a Doctrine subscriber that listens to ``onFlush`` event with priority 10.
+This bundle register a Doctrine subscriber that listens to `onFlush` event with priority 10.
 If you use this bundle together with other bundles that register subscribers on the same
 event, you could experience some issues in case of higher priority.
 

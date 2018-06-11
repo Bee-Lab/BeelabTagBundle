@@ -69,34 +69,22 @@ class Tag implements TagInterface
      */
     protected $name;
 
-    /**
-     * @return string
-     */
     public function __toString(): string
     {
         return $this->name;
     }
 
-    /**
-     * @return int
-     */
     public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(?string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -140,7 +128,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Article implements TaggableInterface
 {
     /**
-     * @var ArrayCollection
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Tag")
      */
@@ -149,49 +137,31 @@ class Article implements TaggableInterface
     // note: if you generated code, you need to
     // replace "Tag" with "TagInterface" where appropriate
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addTag(TagInterface $tag)
+    public function addTag(TagInterface $tag): void
     {
         $this->tags[] = $tag;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function removeTag(TagInterface $tag)
+    public function removeTag(TagInterface $tag): void
     {
         $this->tags->removeElement($tag);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function hasTag(TagInterface $tag)
+    public function hasTag(TagInterface $tag): bool
     {
         return $this->tags->contains($tag);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getTags()
+    public function getTags(): iterable
     {
         return $this->tags;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTagNames(): array
     {
         return empty($this->tagsText) ? [] : array_map('trim', explode(',', $this->tagsText));
@@ -215,7 +185,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ArticleFormType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('tagsText', TextType::class, ['required' => false, 'label' => 'Tags'])
@@ -240,25 +210,21 @@ class Article implements TaggableInterface
     private $tagsText;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated;
 
     // ...
 
-    /**
-     * @param string
-     */
-    public function setTagsText($tagsText)
+    public function setTagsText(?string $tagsText): void
     {
         $this->tagsText = $tagsText;
-        $this->updated = new \DateTime();
+        $this->updated = new \DateTimeImmutable();
     }
 
-    /**
-     * @return string
-     */
-    public function getTagsText()
+    public function getTagsText(): ?string
     {
         $this->tagsText = implode(', ', $this->tags->toArray());
 
@@ -271,7 +237,7 @@ class Article implements TaggableInterface
 
 Note that you need to change something in your Entity when `$tagsText` is updated,
 otherwise flush is not triggered and tags won't work. In example above, we're using
-an `$updated` DateTime property.
+an `$updated` DateTimeImmutable property.
 
 Instead of implementing `TaggableInterface`, you can extend `AbstractTaggable`, like in this example:
 
@@ -290,7 +256,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Article extends AbstractTaggable
 {
     /**
-     * @var \Doctrine\Common\Collections\ArrayCollection
+     * @var \Doctrine\Common\Collections\Collection
      *
      * @ORM\ManyToMany(targetEntity="Tag")
      */
@@ -301,14 +267,10 @@ class Article extends AbstractTaggable
      */
     private $updated;
 
-    /**
-     * @param string $tagsText
-     */
-    public function setTagsText($tagsText)
+    public function setTagsText(?string $tagsText): void
     {
         $this->updated = new \DateTime();
-
-        return parent::setTagsText($tagsText);
+        parent::setTagsText($tagsText);
     }
 }
 ```

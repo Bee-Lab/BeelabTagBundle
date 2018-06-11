@@ -108,7 +108,6 @@ Following configuration is added by recipe:
 ```yaml
 # config/packages/beelab_tag.yaml
 
-# BeelabTag Configuration
 beelab_tag:
     tag_class: App\Entity\Tag
     purge: false
@@ -147,8 +146,8 @@ class Article implements TaggableInterface
      */
     private $tags;
 
-    // note: if you generated code with SensioGeneratorBundle, you need
-    // to replace "Tag" with "TagInterface" where appropriate
+    // note: if you generated code, you need to
+    // replace "Tag" with "TagInterface" where appropriate
 
     /**
      * Constructor
@@ -193,7 +192,7 @@ class Article implements TaggableInterface
     /**
      * {@inheritdoc}
      */
-    public function getTagNames()
+    public function getTagNames(): array
     {
         return empty($this->tagsText) ? [] : array_map('trim', explode(',', $this->tagsText));
     }

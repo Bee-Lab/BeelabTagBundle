@@ -9,31 +9,16 @@ use Beelab\TagBundle\Tag\TagInterface;
  */
 class TagStub implements TagInterface
 {
-    /**
-     * Set name.
-     *
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(?string $name): void
     {
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): ?string
     {
         return 'a name';
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getTags()
+    public function getTags(): ?string
     {
         return 'a name';
     }

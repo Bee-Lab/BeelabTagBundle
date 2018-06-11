@@ -17,23 +17,23 @@ use PHPUnit\Framework\TestCase;
 /**
  * @group unit
  */
-class TagSubscriberTest extends TestCase
+final class TagSubscriberTest extends TestCase
 {
-    public function testNonexistentClass()
+    public function testNonexistentClass(): void
     {
         $this->expectException(MappingException::class);
 
         $subscriber = new TagSubscriber('ClassDoesNotExist');
     }
 
-    public function testInvalidClass()
+    public function testInvalidClass(): void
     {
         $this->expectException(\InvalidArgumentException::class);
 
         $subscriber = new TagSubscriber(NonTaggableStub::class);
     }
 
-    public function testGetSubscribedEvents()
+    public function testGetSubscribedEvents(): void
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $subscriber = new TagSubscriber(get_class($tag));
@@ -41,7 +41,7 @@ class TagSubscriberTest extends TestCase
         $this->assertContains('onFlush', $subscriber->getSubscribedEvents());
     }
 
-    public function testOnFlush()
+    public function testOnFlush(): void
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
@@ -70,7 +70,7 @@ class TagSubscriberTest extends TestCase
         $subscriber->onFlush($args);
     }
 
-    public function testOnFlushEntityWithoutTagsUpdate()
+    public function testOnFlushEntityWithoutTagsUpdate(): void
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
@@ -97,7 +97,7 @@ class TagSubscriberTest extends TestCase
         $subscriber->onFlush($args);
     }
 
-    public function testOnFlushEntityWithoutTagsInsert()
+    public function testOnFlushEntityWithoutTagsInsert(): void
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
@@ -124,7 +124,7 @@ class TagSubscriberTest extends TestCase
         $subscriber->onFlush($args);
     }
 
-    public function testOnFlushWithPurge()
+    public function testOnFlushWithPurge(): void
     {
         $tag = new TagStub();
         $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
@@ -145,7 +145,7 @@ class TagSubscriberTest extends TestCase
         $subscriber->onFlush($args);
     }
 
-    public function testSetTags()
+    public function testSetTags(): void
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();

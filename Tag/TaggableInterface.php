@@ -4,40 +4,13 @@ namespace Beelab\TagBundle\Tag;
 
 interface TaggableInterface
 {
-    /**
-     * Add tag.
-     *
-     * @param TagInterface $tag
-     */
-    public function addTag(TagInterface $tag);
+    public function addTag(TagInterface $tag): void;
 
-    /**
-     * Get names of tags.
-     *
-     * @return array
-     */
-    public function getTagNames();
+    public function getTagNames(): array;
 
-    /**
-     * Get tags.
-     *
-     * @return array|ArrayCollection
-     */
-    public function getTags();
+    public function getTags(): iterable;
 
-    /**
-     * Has tag.
-     *
-     * @param TagInterface $tag
-     *
-     * @return bool
-     */
-    public function hasTag(TagInterface $tag);
+    public function hasTag(TagInterface $tag): bool;
 
-    /**
-     * Remove tag.
-     *
-     * @param TagInterface $tag
-     */
-    public function removeTag(TagInterface $tag);
+    public function removeTag(TagInterface $tag): void;
 }

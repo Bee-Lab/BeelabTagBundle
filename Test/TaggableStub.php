@@ -10,52 +10,26 @@ use Beelab\TagBundle\Tag\TagInterface;
  */
 class TaggableStub implements TaggableInterface
 {
-    /**
-     * Add tag.
-     *
-     * @param TagInterface $tag
-     */
-    public function addTag(TagInterface $tag)
+    public function addTag(TagInterface $tag): void
     {
     }
 
-    /**
-     * Get names of tags.
-     *
-     * @return array
-     */
-    public function getTagNames()
+    public function getTagNames(): array
     {
         return ['foo', 'bar'];
     }
 
-    /**
-     * Get tags.
-     *
-     * @return array|ArrayCollection
-     */
-    public function getTags()
+    public function getTags(): iterable
     {
         return [new TagStub()];
     }
 
-    /**
-     * Has tag.
-     *
-     * @param TagInterface $tag
-     *
-     * @return bool
-     */
-    public function hasTag(TagInterface $tag)
+    public function hasTag(TagInterface $tag): bool
     {
+        return true;
     }
 
-    /**
-     * Remove tag.
-     *
-     * @param TagInterface $tag
-     */
-    public function removeTag(TagInterface $tag)
+    public function removeTag(TagInterface $tag): void
     {
     }
 }

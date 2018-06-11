@@ -15,7 +15,7 @@ abstract class AbstractTaggable implements TaggableInterface
     /**
      * @var ArrayCollection
      *
-     * Override this property in your Entity with definition of ManyToMany relation
+     * Override this property in your Entity with definition of ManyToMany relation.
      */
     protected $tags;
 
@@ -24,77 +24,47 @@ abstract class AbstractTaggable implements TaggableInterface
      */
     protected $tagsText;
 
-    /**
-     * Constructor.
-     */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function addTag(TagInterface $tag)
+    public function addTag(TagInterface $tag): void
     {
         $this->tags[] = $tag;
-
-        return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function removeTag(TagInterface $tag)
+    public function removeTag(TagInterface $tag): void
     {
         $this->tags->removeElement($tag);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function hasTag(TagInterface $tag)
+    public function hasTag(TagInterface $tag): bool
     {
         return $this->tags->contains($tag);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getTags()
+    public function getTags(): iterable
     {
         return $this->tags;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getTagNames()
+    public function getTagNames(): array
     {
         return empty($this->tagsText) ? [] : array_map('trim', explode(',', $this->tagsText));
     }
 
     /**
-     * Set tags text
      * Override this method in your Entity and update a field here.
      *
      * @param string $tagsText
-     *
-     * @return TaggableInterface
      */
-    public function setTagsText($tagsText)
+    public function setTagsText(?string $tagsText): void
     {
         $this->tagsText = $tagsText;
-
-        return $this;
     }
 
-    /**
-     * Get tags text.
-     *
-     * @return string
-     */
-    public function getTagsText()
+    public function getTagsText(): ?string
     {
         $this->tagsText = implode(', ', $this->tags->toArray());
 

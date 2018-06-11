@@ -4,17 +4,7 @@ namespace Beelab\TagBundle\Tag;
 
 interface TagInterface
 {
-    /**
-     * Set name.
-     *
-     * @param string $name
-     */
-    public function setName($name);
+    public function setName(?string $name): void;
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName();
+    public function getName(): ?string;
 }

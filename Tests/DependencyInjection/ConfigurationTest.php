@@ -4,12 +4,13 @@ namespace Beelab\TagBundle\Tests\DependencyInjection;
 
 use Beelab\TagBundle\DependencyInjection\Configuration;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 
-class ConfigurationTest extends TestCase
+final class ConfigurationTest extends TestCase
 {
-    public function testGetConfigTreeBuilder()
+    public function testGetConfigTreeBuilder(): void
     {
         $configuration = new Configuration();
-        $this->assertInstanceOf('Symfony\Component\Config\Definition\Builder\TreeBuilder', $configuration->getConfigTreeBuilder());
+        $this->assertInstanceOf(TreeBuilder::class, $configuration->getConfigTreeBuilder());
     }
 }

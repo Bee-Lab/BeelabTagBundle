@@ -7,12 +7,7 @@ namespace Beelab\TagBundle\Test;
  */
 class TaggableStub3 extends TaggableStub
 {
-    /**
-     * Get names of tags.
-     *
-     * @return array
-     */
-    public function getTagNames()
+    public function getTagNames(): array
     {
         return [];
     }

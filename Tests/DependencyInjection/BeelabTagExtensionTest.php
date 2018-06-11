@@ -5,9 +5,9 @@ namespace Beelab\TagBundle\Tests\DependencyInjection;
 use Beelab\TagBundle\DependencyInjection\BeelabTagExtension;
 use PHPUnit\Framework\TestCase;
 
-class BeelabTagExtensionTest extends TestCase
+final class BeelabTagExtensionTest extends TestCase
 {
-    public function testLoadSetParameters()
+    public function testLoadSetParameters(): void
     {
         $container = $this->getMockBuilder('Symfony\\Component\\DependencyInjection\\ContainerBuilder')
             ->disableOriginalConstructor()->getMock();

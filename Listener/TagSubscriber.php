@@ -34,15 +34,13 @@ class TagSubscriber implements EventSubscriber
     protected $purge;
 
     /**
-     * Constructor.
-     *
      * @param string $tagClassName
      * @param bool   $purge        whether to delete tags when entity is deleted
      *
      * @throws MappingException
      * @throws \InvalidArgumentException
      */
-    public function __construct(string $tagClassName, $purge = false)
+    public function __construct(string $tagClassName, bool $purge = false)
     {
         if (!class_exists($tagClassName)) {
             throw MappingException::nonExistingClass($tagClassName);
@@ -54,10 +52,7 @@ class TagSubscriber implements EventSubscriber
         $this->purge = $purge;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getSubscribedEvents()
+    public function getSubscribedEvents(): array
     {
         return ['onFlush'];
     }
@@ -68,7 +63,7 @@ class TagSubscriber implements EventSubscriber
      *
      * @param OnFlushEventArgs $args
      */
-    public function onFlush(OnFlushEventArgs $args)
+    public function onFlush(OnFlushEventArgs $args): void
     {
         $this->manager = $args->getEntityManager();
         $this->uow = $this->manager->getUnitOfWork();
@@ -97,7 +92,7 @@ class TagSubscriber implements EventSubscriber
      * @param TaggableInterface $entity
      * @param bool              $update true if entity is being updated, false otherwise
      */
-    protected function setTags(TaggableInterface $entity, bool $update = false)
+    protected function setTags(TaggableInterface $entity, bool $update = false): void
     {
         $tagNames = $entity->getTagNames();
         if (empty($tagNames) && !$update) {
@@ -142,7 +137,7 @@ class TagSubscriber implements EventSubscriber
      *
      * @param TaggableInterface $entity
      */
-    protected function purgeTags(TaggableInterface $entity)
+    protected function purgeTags(TaggableInterface $entity): void
     {
         foreach ($entity->getTags() as $oldTag) {
             $this->manager->remove($oldTag);

@@ -263,13 +263,15 @@ class Article extends AbstractTaggable
     private $tags;
 
     /**
+     * @var \DateTimeInterface
+     *
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updated;
 
     public function setTagsText(?string $tagsText): void
     {
-        $this->updated = new \DateTime();
+        $this->updated = new \DateTimeImmutable();
         parent::setTagsText($tagsText);
     }
 }

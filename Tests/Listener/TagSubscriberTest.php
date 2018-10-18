@@ -36,7 +36,7 @@ final class TagSubscriberTest extends TestCase
     public function testGetSubscribedEvents(): void
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
-        $subscriber = new TagSubscriber(get_class($tag));
+        $subscriber = new TagSubscriber(\get_class($tag));
 
         $this->assertContains('onFlush', $subscriber->getSubscribedEvents());
     }
@@ -66,7 +66,7 @@ final class TagSubscriberTest extends TestCase
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 
-        $subscriber = new TagSubscriber(get_class($tag));
+        $subscriber = new TagSubscriber(\get_class($tag));
         $subscriber->onFlush($args);
     }
 
@@ -93,7 +93,7 @@ final class TagSubscriberTest extends TestCase
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 
-        $subscriber = new TagSubscriber(get_class($tag));
+        $subscriber = new TagSubscriber(\get_class($tag));
         $subscriber->onFlush($args);
     }
 
@@ -120,7 +120,7 @@ final class TagSubscriberTest extends TestCase
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 
-        $subscriber = new TagSubscriber(get_class($tag));
+        $subscriber = new TagSubscriber(\get_class($tag));
         $subscriber->onFlush($args);
     }
 
@@ -141,7 +141,7 @@ final class TagSubscriberTest extends TestCase
             ->will($this->returnValue([new TaggableStub()]))
         ;
 
-        $subscriber = new TagSubscriber(get_class($tag), true);
+        $subscriber = new TagSubscriber(\get_class($tag), true);
         $subscriber->onFlush($args);
     }
 
@@ -159,7 +159,7 @@ final class TagSubscriberTest extends TestCase
         $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue([]));
         $uow->expects($this->once())->method('getScheduledEntityDeletions')->will($this->returnValue([]));
 
-        $subscriber = new TagSubscriber(get_class($tag), true);
+        $subscriber = new TagSubscriber(\get_class($tag), true);
         $subscriber->onFlush($args);
     }
 }

@@ -116,8 +116,8 @@ Suppose you want to use tags on an `Article` entity. You have two options: imple
 // src/Entity/Article.php
 namespace App\Entity;
 
-use Beelab\TagBundle\Tag\TagInterface;
 use Beelab\TagBundle\Tag\TaggableInterface;
+use Beelab\TagBundle\Tag\TagInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -144,7 +144,9 @@ class Article implements TaggableInterface
 
     public function addTag(TagInterface $tag): void
     {
-        $this->tags[] = $tag;
+        if (!$this->tags->contains($tag) {
+            $this->tags->add($tag);
+        }
     }
 
     public function removeTag(TagInterface $tag): void
@@ -164,7 +166,7 @@ class Article implements TaggableInterface
 
     public function getTagNames(): array
     {
-        return empty($this->tagsText) ? [] : array_map('trim', explode(',', $this->tagsText));
+        return empty($this->tagsText) ? [] : \array_map('trim', explode(',', $this->tagsText));
     }
 }
 ```
@@ -176,11 +178,11 @@ Most simple usage is in a Form like this one:
 ```php
 <?php
 // src/Form/Type/ArticleFormType.php
-namespace Acme\DemoBundle\Form\Type;
+namespace App\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
 // ...
 
 class ArticleFormType extends AbstractType
@@ -226,7 +228,7 @@ class Article implements TaggableInterface
 
     public function getTagsText(): ?string
     {
-        $this->tagsText = implode(', ', $this->tags->toArray());
+        $this->tagsText = \implode(', ', $this->tags->toArray());
 
         return $this->tagsText;
     }

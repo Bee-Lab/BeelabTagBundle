@@ -144,7 +144,7 @@ class Article implements TaggableInterface
 
     public function addTag(TagInterface $tag): void
     {
-        if (!$this->tags->contains($tag) {
+        if (!$this->tags->contains($tag)) {
             $this->tags->add($tag);
         }
     }

@@ -16,7 +16,7 @@ final class BeelabTagExtensionTest extends TestCase
 
         $parameterBag->expects($this->any())->method('add');
 
-        $container->expects($this->any())->method('getParameterBag')->will($this->returnValue($parameterBag));
+        $container->expects($this->any())->method('getParameterBag')->willReturn($parameterBag);
 
         $extension = new BeelabTagExtension();
         $configs = [

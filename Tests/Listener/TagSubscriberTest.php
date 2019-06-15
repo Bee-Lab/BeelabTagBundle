@@ -50,19 +50,19 @@ final class TagSubscriberTest extends TestCase
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
         $metadata = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
 
-        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($manager));
-        $manager->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
-        $manager->expects($this->any())->method('getRepository')->will($this->returnValue($repo));
-        $manager->expects($this->any())->method('getClassMetadata')->will($this->returnValue($metadata));
+        $args->expects($this->once())->method('getEntityManager')->willReturn($manager);
+        $manager->expects($this->once())->method('getUnitOfWork')->willReturn($uow);
+        $manager->expects($this->any())->method('getRepository')->willReturn($repo);
+        $manager->expects($this->any())->method('getClassMetadata')->willReturn($metadata);
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityInsertions')
-            ->will($this->returnValue([new TaggableStub(), new NonTaggableStub()]))
+            ->willReturn([new TaggableStub(), new NonTaggableStub()])
         ;
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityUpdates')
-            ->will($this->returnValue([new TaggableStub2()]))
+            ->willReturn([new TaggableStub2()])
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 
@@ -78,18 +78,18 @@ final class TagSubscriberTest extends TestCase
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
         $metadata = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
 
-        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($manager));
-        $manager->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
-        $manager->expects($this->any())->method('getClassMetadata')->will($this->returnValue($metadata));
+        $args->expects($this->once())->method('getEntityManager')->willReturn($manager);
+        $manager->expects($this->once())->method('getUnitOfWork')->willReturn($uow);
+        $manager->expects($this->any())->method('getClassMetadata')->willReturn($metadata);
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityInsertions')
-            ->will($this->returnValue([]))
+            ->willReturn([])
         ;
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityUpdates')
-            ->will($this->returnValue([new TaggableStub3()]))
+            ->willReturn([new TaggableStub3()])
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 
@@ -105,18 +105,18 @@ final class TagSubscriberTest extends TestCase
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
         $metadata = $this->getMockBuilder(ClassMetadata::class)->disableOriginalConstructor()->getMock();
 
-        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($manager));
-        $manager->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
-        $manager->expects($this->any())->method('getClassMetadata')->will($this->returnValue($metadata));
+        $args->expects($this->once())->method('getEntityManager')->willReturn($manager);
+        $manager->expects($this->once())->method('getUnitOfWork')->willReturn($uow);
+        $manager->expects($this->any())->method('getClassMetadata')->willReturn($metadata);
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityInsertions')
-            ->will($this->returnValue([new TaggableStub3()]))
+            ->willReturn([new TaggableStub3()])
         ;
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityUpdates')
-            ->will($this->returnValue([]))
+            ->willReturn([])
         ;
         $uow->expects($this->never())->method('getScheduledEntityDeletions');
 
@@ -131,14 +131,14 @@ final class TagSubscriberTest extends TestCase
         $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
 
-        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($manager));
-        $manager->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
-        $uow->expects($this->once())->method('getScheduledEntityInsertions')->will($this->returnValue([]));
-        $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue([]));
+        $args->expects($this->once())->method('getEntityManager')->willReturn($manager);
+        $manager->expects($this->once())->method('getUnitOfWork')->willReturn($uow);
+        $uow->expects($this->once())->method('getScheduledEntityInsertions')->willReturn([]);
+        $uow->expects($this->once())->method('getScheduledEntityUpdates')->willReturn([]);
         $uow
             ->expects($this->once())
             ->method('getScheduledEntityDeletions')
-            ->will($this->returnValue([new TaggableStub()]))
+            ->willReturn([new TaggableStub()])
         ;
 
         $subscriber = new TagSubscriber(\get_class($tag), true);
@@ -152,12 +152,12 @@ final class TagSubscriberTest extends TestCase
         $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
 
-        $args->expects($this->once())->method('getEntityManager')->will($this->returnValue($manager));
-        $manager->expects($this->once())->method('getUnitOfWork')->will($this->returnValue($uow));
+        $args->expects($this->once())->method('getEntityManager')->willReturn($manager);
+        $manager->expects($this->once())->method('getUnitOfWork')->willReturn($uow);
         // TODO create some stubs of taggable entities and non-taggable entities...
-        $uow->expects($this->once())->method('getScheduledEntityInsertions')->will($this->returnValue([$tag]));
-        $uow->expects($this->once())->method('getScheduledEntityUpdates')->will($this->returnValue([]));
-        $uow->expects($this->once())->method('getScheduledEntityDeletions')->will($this->returnValue([]));
+        $uow->expects($this->once())->method('getScheduledEntityInsertions')->willReturn([$tag]);
+        $uow->expects($this->once())->method('getScheduledEntityUpdates')->willReturn([]);
+        $uow->expects($this->once())->method('getScheduledEntityDeletions')->willReturn([]);
 
         $subscriber = new TagSubscriber(\get_class($tag), true);
         $subscriber->onFlush($args);

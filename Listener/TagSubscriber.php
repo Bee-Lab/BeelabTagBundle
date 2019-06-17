@@ -112,7 +112,7 @@ class TagSubscriber implements EventSubscriber
                 // see http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#onflush
                 $this->uow->computeChangeSet($tagClassMetadata, $tag);
             }
-            if (!$entity->getTags()->contains($tag)) {
+            if (!in_array($tag, $entity->getTags())) {
                 // add tag only if not already added
                 $entity->addTag($tag);
             }

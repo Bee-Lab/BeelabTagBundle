@@ -39,11 +39,6 @@ abstract class AbstractTaggable implements TaggableInterface
         $this->tags->removeElement($tag);
     }
 
-    public function hasTag(TagInterface $tag): bool
-    {
-        return $this->tags->contains($tag);
-    }
-
     public function getTags(): iterable
     {
         return $this->tags;

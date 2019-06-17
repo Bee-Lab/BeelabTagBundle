@@ -24,11 +24,6 @@ class TaggableStub implements TaggableInterface
         return [new TagStub()];
     }
 
-    public function hasTag(TagInterface $tag): bool
-    {
-        return true;
-    }
-
     public function removeTag(TagInterface $tag): void
     {
     }

@@ -10,7 +10,5 @@ interface TaggableInterface
 
     public function getTags(): iterable;
 
-    public function hasTag(TagInterface $tag): bool;
-
     public function removeTag(TagInterface $tag): void;
 }

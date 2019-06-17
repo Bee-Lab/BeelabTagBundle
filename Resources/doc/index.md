@@ -1,5 +1,4 @@
-BeelabTagBundle Documentation
-=============================
+# BeelabTagBundle Documentation
 
 ## Installation
 
@@ -31,6 +30,7 @@ public function registerBundles()
     ];
 }
 ```
+
 See also [Other bundles](#4-other-bundles) for a note about registering order.
 
 ### 2. Configuration
@@ -97,8 +97,8 @@ Following configuration is added by recipe:
 # config/packages/beelab_tag.yaml
 
 beelab_tag:
-    tag_class: App\Entity\Tag
-    purge: false
+  tag_class: App\Entity\Tag
+  purge: false
 ```
 
 > **Warning**: the `purge` option is not mandatory and defaults to `false`. You should use this
@@ -152,11 +152,6 @@ class Article implements TaggableInterface
     public function removeTag(TagInterface $tag): void
     {
         $this->tags->removeElement($tag);
-    }
-
-    public function hasTag(TagInterface $tag): bool
-    {
-        return $this->tags->contains($tag);
     }
 
     public function getTags(): iterable

@@ -15,7 +15,7 @@ final class AbstractTaggableTest extends TestCase
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
         $entity = new Entity();
         $entity->addTag($tag);
-        $this->assertTrue(in_array($tag, $entity->getTags()));
+        $this->assertTrue($entity->getTags()->contains($tag));
     }
 
     public function testRemoveTag(): void
@@ -24,7 +24,7 @@ final class AbstractTaggableTest extends TestCase
         $entity = new Entity();
         $entity->addTag($tag);
         $entity->removeTag($tag);
-        $this->assertFalse(in_array($tag, $entity->getTags()));
+        $this->assertFalse($entity->getTags()->contains($tag));
     }
 
     public function testGetTags(): void

@@ -10,6 +10,14 @@ use PHPUnit\Framework\TestCase;
  */
 final class AbstractTaggableTest extends TestCase
 {
+    public function testAddTag(): void
+    {
+        $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
+        $entity = new Entity();
+        $entity->addTag($tag);
+        $this->assertTrue($entity->getTags()->contains($tag));
+    }
+
     public function testRemoveTag(): void
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();

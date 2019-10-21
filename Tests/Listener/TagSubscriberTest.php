@@ -44,6 +44,7 @@ final class TagSubscriberTest extends TestCase
     public function testOnFlush(): void
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
+        /** @var OnFlushEventArgs&\PHPUnit\Framework\MockObject\MockObject $args */
         $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
         $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $repo = $this->getMockBuilder('Doctrine\ORM\EntityRepository')->disableOriginalConstructor()->getMock();
@@ -73,6 +74,7 @@ final class TagSubscriberTest extends TestCase
     public function testOnFlushEntityWithoutTagsUpdate(): void
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
+        /** @var OnFlushEventArgs&\PHPUnit\Framework\MockObject\MockObject $args */
         $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
         $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
@@ -100,6 +102,7 @@ final class TagSubscriberTest extends TestCase
     public function testOnFlushEntityWithoutTagsInsert(): void
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
+        /** @var OnFlushEventArgs&\PHPUnit\Framework\MockObject\MockObject $args */
         $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
         $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
@@ -127,6 +130,7 @@ final class TagSubscriberTest extends TestCase
     public function testOnFlushWithPurge(): void
     {
         $tag = new TagStub();
+        /** @var OnFlushEventArgs&\PHPUnit\Framework\MockObject\MockObject $args */
         $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
         $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();
@@ -148,6 +152,7 @@ final class TagSubscriberTest extends TestCase
     public function testSetTags(): void
     {
         $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
+        /** @var OnFlushEventArgs&\PHPUnit\Framework\MockObject\MockObject $args */
         $args = $this->getMockBuilder(OnFlushEventArgs::class)->disableOriginalConstructor()->getMock();
         $manager = $this->getMockBuilder(EntityManager::class)->disableOriginalConstructor()->getMock();
         $uow = $this->getMockBuilder('Doctrine\ORM\UnitOfWork')->disableOriginalConstructor()->getMock();

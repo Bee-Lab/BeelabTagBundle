@@ -4,15 +4,17 @@ namespace Beelab\TagBundle\Tests\DependencyInjection;
 
 use Beelab\TagBundle\DependencyInjection\BeelabTagExtension;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 final class BeelabTagExtensionTest extends TestCase
 {
     public function testLoadSetParameters(): void
     {
-        $container = $this->getMockBuilder('Symfony\\Component\\DependencyInjection\\ContainerBuilder')
-            ->disableOriginalConstructor()->getMock();
-        $parameterBag = $this->getMockBuilder('Symfony\\Component\\DependencyInjection\\ParameterBag\\ParameterBag')
-            ->disableOriginalConstructor()->getMock();
+        /** @var ContainerBuilder&\PHPUnit\Framework\MockObject\MockObject $container */
+        $container = $this->getMockBuilder(ContainerBuilder::class)->disableOriginalConstructor()->getMock();
+        /** @var ParameterBag&\PHPUnit\Framework\MockObject\MockObject $parameterBag */
+        $parameterBag = $this->getMockBuilder(ParameterBag::class)->disableOriginalConstructor()->getMock();
 
         $parameterBag->expects($this->any())->method('add');
 

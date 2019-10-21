@@ -2,6 +2,7 @@
 
 namespace Beelab\TagBundle\Tests\Entity;
 
+use Beelab\TagBundle\Tag\TagInterface;
 use Beelab\TagBundle\Test\Entity;
 use PHPUnit\Framework\TestCase;
 
@@ -12,7 +13,8 @@ final class AbstractTaggableTest extends TestCase
 {
     public function testHasTag(): void
     {
-        $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
+        /** @var TagInterface&\PHPUnit\Framework\MockObject\MockObject $tag */
+        $tag = $this->createMock(TagInterface::class);
         $entity = new Entity();
         $entity->addTag($tag);
         $this->assertTrue($entity->hasTag($tag));
@@ -20,7 +22,8 @@ final class AbstractTaggableTest extends TestCase
 
     public function testRemoveTag(): void
     {
-        $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
+        /** @var TagInterface&\PHPUnit\Framework\MockObject\MockObject $tag */
+        $tag = $this->createMock(TagInterface::class);
         $entity = new Entity();
         $entity->addTag($tag);
         $entity->removeTag($tag);
@@ -29,7 +32,8 @@ final class AbstractTaggableTest extends TestCase
 
     public function testGetTags(): void
     {
-        $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
+        /** @var TagInterface&\PHPUnit\Framework\MockObject\MockObject $tag */
+        $tag = $this->createMock(TagInterface::class);
         $entity = new Entity();
         $entity->addTag($tag);
         $this->assertCount(1, $entity->getTags());
@@ -37,7 +41,8 @@ final class AbstractTaggableTest extends TestCase
 
     public function testGetTagsText(): void
     {
-        $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
+        /** @var TagInterface&\PHPUnit\Framework\MockObject\MockObject $tag */
+        $tag = $this->createMock(TagInterface::class);
         $entity = new Entity();
         $entity->setTagsText('foo, bar, baz');
         $this->assertEquals('', $entity->getTagsText());
@@ -45,7 +50,8 @@ final class AbstractTaggableTest extends TestCase
 
     public function testGetTagNames(): void
     {
-        $tag = $this->getMockBuilder('Beelab\TagBundle\Tag\TagInterface')->getMock();
+        /** @var TagInterface&\PHPUnit\Framework\MockObject\MockObject $tag */
+        $tag = $this->createMock(TagInterface::class);
         $entity = new Entity();
         $this->assertEquals([], $entity->getTagNames());
     }

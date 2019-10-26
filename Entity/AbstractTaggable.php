@@ -13,9 +13,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 abstract class AbstractTaggable implements TaggableInterface
 {
     /**
-     * @var ArrayCollection
-     *
      * Override this property in your Entity with definition of ManyToMany relation.
+     *
+     * @var ArrayCollection
      */
     protected $tags;
 

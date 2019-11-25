@@ -12,7 +12,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\Extension;
  *
  * To learn more see {@link http://symfony.com/doc/current/bundles/extension.html}
  */
-class BeelabTagExtension extends Extension
+final class BeelabTagExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container): void
     {
@@ -20,7 +20,7 @@ class BeelabTagExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
         $container->setParameter('beelab_tag.tag_class', $config['tag_class']);
         $container->setParameter('beelab_tag.purge', $config['purge']);
-        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../../config'));
         $loader->load('services.xml');
     }
 }

@@ -2,8 +2,8 @@
 
 namespace Beelab\TagBundle\Entity;
 
-use Beelab\TagBundle\Tag\TagInterface;
 use Beelab\TagBundle\Tag\TaggableInterface;
+use Beelab\TagBundle\Tag\TagInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -20,7 +20,7 @@ abstract class AbstractTaggable implements TaggableInterface
     protected $tags;
 
     /**
-     * @var string
+     * @var string|null
      */
     protected $tagsText;
 
@@ -51,13 +51,11 @@ abstract class AbstractTaggable implements TaggableInterface
 
     public function getTagNames(): array
     {
-        return empty($this->tagsText) ? [] : array_map('trim', explode(',', $this->tagsText));
+        return empty($this->tagsText) ? [] : \array_map('trim', \explode(',', $this->tagsText));
     }
 
     /**
      * Override this method in your Entity and update a field here.
-     *
-     * @param string $tagsText
      */
     public function setTagsText(?string $tagsText): void
     {
@@ -66,7 +64,7 @@ abstract class AbstractTaggable implements TaggableInterface
 
     public function getTagsText(): ?string
     {
-        $this->tagsText = implode(', ', $this->tags->toArray());
+        $this->tagsText = \implode(', ', $this->tags->toArray());
 
         return $this->tagsText;
     }

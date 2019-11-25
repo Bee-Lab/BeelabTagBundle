@@ -3,11 +3,11 @@
 namespace Beelab\TagBundle\Tests\Listener;
 
 use Beelab\TagBundle\Listener\TagSubscriber;
-use Beelab\TagBundle\Test\NonTaggableStub;
-use Beelab\TagBundle\Test\TaggableStub;
-use Beelab\TagBundle\Test\TaggableStub2;
-use Beelab\TagBundle\Test\TaggableStub3;
-use Beelab\TagBundle\Test\TagStub;
+use Beelab\TagBundle\Tests\NonTaggableStub;
+use Beelab\TagBundle\Tests\TaggableStub;
+use Beelab\TagBundle\Tests\TaggableStub2;
+use Beelab\TagBundle\Tests\TaggableStub3;
+use Beelab\TagBundle\Tests\TagStub;
 use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\OnFlushEventArgs;

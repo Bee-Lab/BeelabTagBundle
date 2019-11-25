@@ -1,6 +1,6 @@
 <?php
 
-namespace Beelab\TagBundle\Test;
+namespace Beelab\TagBundle\Tests;
 
 use Beelab\TagBundle\Entity\AbstractTaggable;
 

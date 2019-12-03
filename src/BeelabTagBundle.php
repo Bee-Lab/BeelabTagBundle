@@ -4,7 +4,7 @@ namespace Beelab\TagBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class BeelabTagBundle extends Bundle
+final class BeelabTagBundle extends Bundle
 {
     public function getPath(): string
     {

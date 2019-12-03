@@ -11,7 +11,7 @@ use Doctrine\ORM\Event\OnFlushEventArgs;
 /**
  * Add tags to entities that implements TaggableInterface.
  */
-class TagSubscriber implements EventSubscriber
+final class TagSubscriber implements EventSubscriber
 {
     /**
      * @var \Doctrine\ORM\EntityManager

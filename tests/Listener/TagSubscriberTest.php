@@ -8,10 +8,10 @@ use Beelab\TagBundle\Tests\TaggableStub;
 use Beelab\TagBundle\Tests\TaggableStub2;
 use Beelab\TagBundle\Tests\TaggableStub3;
 use Beelab\TagBundle\Tests\TagStub;
-use Doctrine\Common\Persistence\Mapping\MappingException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\Persistence\Mapping\MappingException;
 use PHPUnit\Framework\TestCase;
 
 /**

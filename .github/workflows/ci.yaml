@@ -19,10 +19,10 @@ jobs:
                       composer_option: '--prefer-lowest'
                     - description: 'Symfony 5.1'
                       php: '7.4'
-                      symfony: '5.1.*'
+                      symfony: 5.1.*
                     - description: 'Symfony 5.2'
                       php: '8.0'
-                      symfony: '5.2.*'
+                      symfony: 5.2.*
         name: PHP ${{ matrix.php }} tests (${{ matrix.description }})
         steps:
             - name: Checkout
@@ -37,6 +37,6 @@ jobs:
               with:
                   php-version: ${{ matrix.php }}
             - run: |
-                sed -ri '/s/"symfony\/(.+)": "(.+)"/"symfony\/\1": "'${{ matrix.symfony_constraint }}'"/' composer.json;
+                sed -ri 's/"symfony\/(.+)": "(.+)"/"symfony\/\1": "'${{ matrix.symfony }}'"/' composer.json;
             - run: composer update --no-interaction --no-progress --ansi ${{ matrix.composer_option }}
-            - run: vendor/bin/phpunit
+            - run: bin/phpunit

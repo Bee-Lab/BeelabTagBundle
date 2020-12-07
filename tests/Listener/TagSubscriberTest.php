@@ -8,6 +8,7 @@ use Beelab\TagBundle\Tests\TaggableStub;
 use Beelab\TagBundle\Tests\TaggableStub2;
 use Beelab\TagBundle\Tests\TaggableStub3;
 use Beelab\TagBundle\Tests\TagStub;
+use Doctrine\Common\Persistence\Mapping\MappingException as LegacyMappingException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -21,7 +22,11 @@ final class TagSubscriberTest extends TestCase
 {
     public function testNonexistentClass(): void
     {
-        $this->expectException(MappingException::class);
+        if (\class_exists('Doctrine\Common\Persistence\Mapping\MappingException')) {
+            $this->expectException(LegacyMappingException::class);
+        } else {
+            $this->expectException(MappingException::class);
+        }
 
         $subscriber = new TagSubscriber('ClassDoesNotExist');
     }

@@ -5,6 +5,7 @@ namespace Beelab\TagBundle\Listener;
 use Beelab\TagBundle\Tag\TaggableInterface;
 use Beelab\TagBundle\Tag\TagInterface;
 use Doctrine\Common\EventSubscriber;
+use Doctrine\Common\Persistence\Mapping\MappingException as LegacyMappingException;
 use Doctrine\ORM\Event\OnFlushEventArgs;
 use Doctrine\Persistence\Mapping\MappingException;
 
@@ -42,6 +43,9 @@ final class TagSubscriber implements EventSubscriber
     public function __construct(string $tagClassName, bool $purge = false)
     {
         if (!\class_exists($tagClassName)) {
+            if (\class_exists('Doctrine\Common\Persistence\Mapping\MappingException')) {
+                throw LegacyMappingException::nonExistingClass($tagClassName);
+            }
             throw MappingException::nonExistingClass($tagClassName);
         }
         $this->tag = new $tagClassName();

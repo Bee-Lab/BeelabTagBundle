@@ -17,22 +17,22 @@ final class TagSubscriber implements EventSubscriber
     /**
      * @var \Doctrine\ORM\EntityManager
      */
-    protected $manager;
+    private $manager;
 
     /**
      * @var \Doctrine\ORM\UnitOfWork
      */
-    protected $uow;
+    private $uow;
 
     /**
      * @var TagInterface
      */
-    protected $tag;
+    private $tag;
 
     /**
      * @var bool
      */
-    protected $purge;
+    private $purge;
 
     /**
      * @param bool $purge whether to delete tags when entity is deleted
@@ -92,7 +92,7 @@ final class TagSubscriber implements EventSubscriber
      *
      * @param bool $update true if entity is being updated, false otherwise
      */
-    protected function setTags(TaggableInterface $entity, bool $update = false): void
+    private function setTags(TaggableInterface $entity, bool $update = false): void
     {
         $tagNames = $entity->getTagNames();
         if (empty($tagNames) && !$update) {
@@ -135,7 +135,7 @@ final class TagSubscriber implements EventSubscriber
      * Warning: DO NOT purge tags if you have more than one entity
      * with tags, since this could lead to costraint violations.
      */
-    protected function purgeTags(TaggableInterface $entity): void
+    private function purgeTags(TaggableInterface $entity): void
     {
         foreach ($entity->getTags() as $oldTag) {
             $this->manager->remove($oldTag);

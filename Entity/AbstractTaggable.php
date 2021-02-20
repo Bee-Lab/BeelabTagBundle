@@ -66,7 +66,7 @@ abstract class AbstractTaggable implements TaggableInterface
 
     public function getTagsText(): ?string
     {
-        $this->tagsText = empty($this->tags) ? null : implode(', ', $this->tags->toArray());
+        $this->tagsText = implode(', ', $this->tags->toArray());
 
         return $this->tagsText;
     }

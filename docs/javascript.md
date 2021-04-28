@@ -51,25 +51,16 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 
-class TagsTextType extends AbstractType
+final class TagsTextType extends AbstractType
 {
-    /**
-     * @var RouterInterface $route
-     */
-    private $router;
+    private RouterInterface $router;
 
-    /**
-     * @param RouterInterface $router
-     */
     public function __construct(RouterInterface $router)
     {
         $this->router = $router;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'required' => false,
@@ -81,10 +72,7 @@ class TagsTextType extends AbstractType
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getParent()
+    public function getParent(): string
     {
         return TextType::class;
     }
@@ -99,12 +87,12 @@ Add this snippet to your Javascript:
 ```js
 $(document).ready(function () {
     (function () {
-        var $tagInput = $('input[name$="[tagsText]"]');
+        var $tagInput = $("input[name$='[tagsText]']");
         function tags($input) {
-            $input.attr('type', 'hidden').select2({
+            $input.attr("type", "hidden").select2({
                 tags: true,
                 tokenSeparators: [","],
-                createSearchChoice: function(term, data) {
+                createSearchChoice: function (term, data) {
                     if ($(data).filter(function () {
                         return this.text.localeCompare(term) === 0;
                     }).length === 0) {
